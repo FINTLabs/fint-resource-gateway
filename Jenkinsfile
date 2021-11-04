@@ -11,9 +11,9 @@ pipeline {
         stage('Publish') {
             when { branch 'master' }
             steps {
-                sh "docker tag ${GIT_COMMIT} fintlabsacr.azurecr.io/kunde-portal:build.${BUILD_NUMBER}_${GIT_COMMIT}"
+                sh "docker tag ${GIT_COMMIT} fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}"
                 withDockerRegistry([credentialsId: 'fintlabsacr.azurecr.io', url: 'https://fintlabsacr.azurecr.io']) {
-                    sh "docker push fintlabsacr.azurecr.io/kunde-portal:build.${BUILD_NUMBER}_${GIT_COMMIT}"
+                    sh "docker push fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}"
                 }
                 /**
                  * Uncomment to auto deploy to your prefered environment
@@ -31,8 +31,8 @@ pipeline {
 //            when { changeRequest() }
 //            steps {
 //                withDockerRegistry([credentialsId: 'fintlabsacr.azurecr.io', url: 'https://fintlabsacr.azurecr.io']) {
-//                    sh "docker tag ${GIT_COMMIT} fintlabsacr.azurecr.io/kunde-portal:${BRANCH_NAME}.${BUILD_NUMBER}"
-//                    sh "docker push fintlabsacr.azurecr.io/kunde-portal:${BRANCH_NAME}.${BUILD_NUMBER}"
+//                    sh "docker tag ${GIT_COMMIT} fintlabsacr.azurecr.io/fint-resource-gateway:${BRANCH_NAME}.${BUILD_NUMBER}"
+//                    sh "docker push fintlabsacr.azurecr.io/fint-resource-gateway:${BRANCH_NAME}.${BUILD_NUMBER}"
 //                }
 //            }
 //        }
@@ -44,9 +44,9 @@ pipeline {
 //                script {
 //                    VERSION = TAG_NAME[1..-1]
 //                }
-//                sh "docker tag ${GIT_COMMIT} fintlabsacr.azurecr.io/kunde-portal:${VERSION}"
+//                sh "docker tag ${GIT_COMMIT} fintlabsacr.azurecr.io/fint-resource-gateway:${VERSION}"
 //                withDockerRegistry([credentialsId: 'fintlabsacr.azurecr.io', url: 'https://fintlabsacr.azurecr.io']) {
-//                    sh "docker push fintlabsacr.azurecr.io/kunde-portal:${VERSION}"
+//                    sh "docker push fintlabsacr.azurecr.io/fint-resource-gateway:${VERSION}"
 //                }
 //            }
 //        }
