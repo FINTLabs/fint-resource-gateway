@@ -1,0 +1,36 @@
+fint:
+  client:
+    password: ''
+    username: ''
+    base-url: https://api.felleskomponent.no
+    registration-id: fint
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          fint-idp:
+            token-uri: https://idp.felleskomponent.no/nidp/oauth/nam/token
+        registration:
+          fint:
+            authorization-grant-type: password
+            client-id:
+            client-secret:
+            provider: fint-idp
+            scope: fint-client
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:29092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+    producer:
+      bootstrap-servers: localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

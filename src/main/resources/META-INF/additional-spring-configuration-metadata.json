@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "fint.client.username",
+      "type": "java.lang.String",
+      "description": "Description for fint.client.username."
+    },
+    {
+      "name": "fint.client.password",
+      "type": "java.lang.String",
+      "description": "Description for fint.client.password."
+    }
+  ]
+}
