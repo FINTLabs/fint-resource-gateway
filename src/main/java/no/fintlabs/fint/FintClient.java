@@ -1,4 +1,4 @@
-package no.fintlabs;
+package no.fintlabs.fint;
 
 import lombok.Data;
 import no.fint.model.resource.AbstractCollectionResources;

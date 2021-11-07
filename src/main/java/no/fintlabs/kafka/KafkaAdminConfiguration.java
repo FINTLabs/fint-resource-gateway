@@ -1,7 +1,6 @@
 package no.fintlabs.kafka;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaTopicConfig {
-    
+public class KafkaAdminConfiguration {
+
     @Value(value = "${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapAddress;
 
