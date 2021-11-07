@@ -12,12 +12,12 @@ public class FintListendableFutureCallback<T> implements ListenableFutureCallbac
 
     @Override
     public void onFailure(Throwable ex) {
-        log.trace("Unable to send message due to : " + ex.getMessage());
+        log.info("Unable to send message due to : " + ex.getMessage());
     }
 
     @Override
     public void onSuccess(SendResult<String, EntityMessage<T>> result) {
-        log.trace("Sent message=[" + Objects.requireNonNull(result).getProducerRecord().value() +
+        log.info("Sent message=[" + Objects.requireNonNull(result).getProducerRecord().value() +
                 "] with offset=[" + result.getRecordMetadata().offset() + "]");
     }
 }

@@ -1,14 +1,19 @@
 package no.fintlabs.fint;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.kafka.core.KafkaTemplate;
 
 
-public abstract class FintKafkaProducer<T> implements FintProducer<T> {
+public abstract class FintKafkaEntityProducer<T> implements FintProducer<T> {
 
     protected final KafkaTemplate<String, EntityMessage<T>> kafkaTemplate;
+    private final NewTopic topic;
 
-    public FintKafkaProducer(KafkaTemplate<String, EntityMessage<T>> kafkaTemplate) {
+
+    public FintKafkaEntityProducer(KafkaTemplate<String, EntityMessage<T>> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
+        this.topic = new NewTopic(getTopicName(), 1, (short) 1);
+
     }
 
     public void sendMessage(String key, T object) {
@@ -20,4 +25,6 @@ public abstract class FintKafkaProducer<T> implements FintProducer<T> {
                 )
                 .addCallback(new FintListendableFutureCallback<>());
     }
+
+
 }
