@@ -12,7 +12,7 @@ public class FintListendableFutureCallback<T> implements ListenableFutureCallbac
 
     @Override
     public void onFailure(Throwable ex) {
-        log.info("Unable to send message due to : " + ex.getMessage());
+        log.error("Unable to send message due to : " + ex.getMessage());
     }
 
     @Override
