@@ -1,30 +1,49 @@
 package no.fintlabs.fint;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import java.util.Objects;
 
-public abstract class FintKafkaEntityProducer<T> implements FintProducer<T> {
+@Slf4j
+public abstract class FintKafkaEntityProducer {
 
-    protected final KafkaTemplate<String, EntityMessage<T>> kafkaTemplate;
-    private final NewTopic topic;
+    protected final KafkaTemplate<String, byte[]> kafkaTemplate;
+    private final String topicName;
+    private final FintClient fintClient;
+    private final String endpointUrl;
 
-
-    public FintKafkaEntityProducer(KafkaTemplate<String, EntityMessage<T>> kafkaTemplate) {
+    public FintKafkaEntityProducer(KafkaTemplate<String, byte[]> kafkaTemplate, FintClient fintClient) {
+        this.endpointUrl = this.getEndpointUrl();
+        // TODO: 12/11/2021 Valider endepunkt
         this.kafkaTemplate = kafkaTemplate;
-        this.topic = new NewTopic(getTopicName(), 1, (short) 1);
-
+        this.topicName = FintTopicUtilities.getTopicNameFromEndpointUrl(endpointUrl);
+        new NewTopic(topicName, 1, (short) 1);
+        this.fintClient = fintClient;
     }
 
-    public void sendMessage(String key, T object) {
+    protected abstract String getEndpointUrl();
+
+    public abstract void pollingSchedule();
+
+    private void sendMessage(byte[] object) {
         kafkaTemplate
                 .send(
-                        getTopicName(),
-                        key,
-                        new EntityMessage<>(object)
+                        this.topicName,
+                        object
                 )
-                .addCallback(new FintListendableFutureCallback<>());
+                .addCallback(new FintListendableFutureCallback());
     }
 
+    protected void pollResources() {
+        log.info("Polling resources from " + endpointUrl);
+        Objects.requireNonNull(fintClient.getResources(endpointUrl).block())
+                .stream()
+                //.filter(o -> o.getSelfLinks().stream().anyMatch(link -> link.getHref().toLowerCase().contains("systemid")))
+                .peek(r -> log.info("Sending resources as byte array: length=" + r.length))
+                .forEach(this::sendMessage);
+        log.info("Completed polling resources from " + endpointUrl);
+    }
 
 }

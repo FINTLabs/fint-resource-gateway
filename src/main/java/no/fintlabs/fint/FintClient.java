@@ -2,8 +2,12 @@ package no.fintlabs.fint;
 
 import lombok.Data;
 import no.fint.model.resource.AbstractCollectionResources;
+import no.fint.model.resource.administrasjon.personal.ArbeidsforholdResources;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.CoreSubscriber;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -21,23 +25,21 @@ public class FintClient {
         this.webClient = webClient;
     }
 
-    public <S, T extends AbstractCollectionResources<S>> Mono<List<S>> getResources(Class<T> clazz, String endpoint) {
-
-        return get(clazz, endpoint)
-                .flatMapIterable(T::getContent)
+    public Mono<List<byte[]>> getResources(String endpoint) {
+        return get(endpoint)
+                .flatMapIterable(ByteArrayResources::getContent)
                 .collect(Collectors.toList());
     }
 
-    public <T> Mono<T> get(Class<T> clazz, String endpoint) {
-
-        return webClient.get()
+    public Mono<ByteArrayResources> get(String endpoint) {
+         return webClient.get()
                 .uri(endpoint.concat("/last-updated"))
                 .retrieve()
                 .bodyToMono(LastUpdated.class)
                 .flatMap(lastUpdated -> webClient.get()
                         .uri(endpoint, uriBuilder -> uriBuilder.queryParam("sinceTimeStamp", sinceTimestamp.getOrDefault(endpoint, 0L)).build())
                         .retrieve()
-                        .bodyToMono(clazz)
+                        .bodyToMono(ByteArrayResources.class)
                         .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated())));
     }
 
