@@ -6,7 +6,7 @@ import no.fint.model.resource.AbstractCollectionResources;
 
 import java.util.List;
 
-public class ByteArrayResources extends AbstractCollectionResources<Object> {
+public class ObjectResources extends AbstractCollectionResources<Object> {
     @Override
     @JsonIgnore
     @Deprecated
@@ -15,6 +15,6 @@ public class ByteArrayResources extends AbstractCollectionResources<Object> {
         };
     }
 
-    public ByteArrayResources() {
+    public ObjectResources() {
     }
 }

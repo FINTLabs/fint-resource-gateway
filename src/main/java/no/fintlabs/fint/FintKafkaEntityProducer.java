@@ -41,16 +41,13 @@ public abstract class FintKafkaEntityProducer {
     protected void pollResources() {
         log.info("Polling resources from " + endpointUrl);
 
-        //       String output = fintClient.getResources(endpointUrl);
-        //       sendMessage(output.getBytes());
-
         Objects.requireNonNull(fintClient.getResources(endpointUrl).block())
                 .stream()
                 .map(r -> ((HashMap<String, ?>) r))
                 //.filter(o -> o.getSelfLinks().stream().anyMatch(link -> link.getHref().toLowerCase().contains("systemid")))
                 .filter(r -> r.containsKey("systemId"))
                 .peek(r -> log.info("Sending aresources as byte array: length=" + r))
-                .forEach(r -> this.sendMessage(((HashMap<String, String>)r.get("systemId")).get("identifikatorverdi"), r));
+                .forEach(r -> this.sendMessage(((HashMap<String, String>) r.get("systemId")).get("identifikatorverdi"), r));
         log.info("Completed polling resources from " + endpointUrl);
     }
 
