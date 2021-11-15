@@ -6,11 +6,11 @@ import no.fint.model.resource.AbstractCollectionResources;
 
 import java.util.List;
 
-public class ByteArrayResources extends AbstractCollectionResources<byte[]> {
+public class ByteArrayResources extends AbstractCollectionResources<Object> {
     @Override
     @JsonIgnore
     @Deprecated
-    public TypeReference<List<byte[]>> getTypeReference() {
+    public TypeReference<List<Object>> getTypeReference() {
         return new TypeReference<>(){
         };
     }

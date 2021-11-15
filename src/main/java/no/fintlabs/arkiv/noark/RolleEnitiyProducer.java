@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class RolleEnitiyProducer extends FintKafkaEntityProducer {
-    public RolleEnitiyProducer(KafkaTemplate<String, byte[]> kafkaTemplate, FintClient fintClient) {
+    public RolleEnitiyProducer(KafkaTemplate<String, Object> kafkaTemplate, FintClient fintClient) {
         super(kafkaTemplate, fintClient);
     }
 

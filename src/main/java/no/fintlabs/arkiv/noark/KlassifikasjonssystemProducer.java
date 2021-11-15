@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class KlassifikasjonssystemProducer extends FintKafkaEntityProducer {
-    public KlassifikasjonssystemProducer(KafkaTemplate<String, byte[]> kafkaTemplate, FintClient fintClient) {
+    public KlassifikasjonssystemProducer(KafkaTemplate<String, Object> kafkaTemplate, FintClient fintClient) {
         super(kafkaTemplate, fintClient);
     }
 

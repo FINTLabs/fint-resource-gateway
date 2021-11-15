@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.asList;
+
 @Component
 public class FintClient {
     private final WebClient webClient;
@@ -25,7 +27,7 @@ public class FintClient {
         this.webClient = webClient;
     }
 
-    public Mono<List<byte[]>> getResources(String endpoint) {
+    public Mono<List<Object>> getResources(String endpoint) {
         return get(endpoint)
                 .flatMapIterable(ByteArrayResources::getContent)
                 .collect(Collectors.toList());
@@ -39,6 +41,7 @@ public class FintClient {
                 .flatMap(lastUpdated -> webClient.get()
                         .uri(endpoint, uriBuilder -> uriBuilder.queryParam("sinceTimeStamp", sinceTimestamp.getOrDefault(endpoint, 0L)).build())
                         .retrieve()
+                        //.bodyToMono(String.class)
                         .bodyToMono(ByteArrayResources.class)
                         .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated())));
     }

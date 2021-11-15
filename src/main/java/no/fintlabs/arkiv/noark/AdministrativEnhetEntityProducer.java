@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdministrativEnhetEntityProducer extends FintKafkaEntityProducer {
 
-    public AdministrativEnhetEntityProducer(KafkaTemplate<String, byte[]> kafkaTemplate, FintClient fintClient) {
+    public AdministrativEnhetEntityProducer(KafkaTemplate<String, Object> kafkaTemplate, FintClient fintClient) {
         super(kafkaTemplate, fintClient);
     }
 

@@ -7,7 +7,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import java.util.Objects;
 
 @Slf4j
-public class FintListendableFutureCallback implements ListenableFutureCallback<SendResult<String, byte[]>> {
+public class FintListendableFutureCallback implements ListenableFutureCallback<SendResult<String, Object>> {
 
 
     @Override
@@ -16,7 +16,7 @@ public class FintListendableFutureCallback implements ListenableFutureCallback<S
     }
 
     @Override
-    public void onSuccess(SendResult<String, byte[]> result) {
+    public void onSuccess(SendResult<String, Object> result) {
         log.info("Sent message=[" + Objects.requireNonNull(result).getProducerRecord().value() +
                 "] with offset=[" + result.getRecordMetadata().offset() + "]");
     }
