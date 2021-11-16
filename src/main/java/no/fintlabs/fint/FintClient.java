@@ -26,7 +26,7 @@ public class FintClient {
                 .collect(Collectors.toList());
     }
 
-    public Mono<ObjectResources> get(String endpoint) {
+    private Mono<ObjectResources> get(String endpoint) {
          return webClient.get()
                 .uri(endpoint.concat("/last-updated"))
                 .retrieve()

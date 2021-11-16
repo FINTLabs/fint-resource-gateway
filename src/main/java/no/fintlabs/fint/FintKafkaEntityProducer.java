@@ -19,7 +19,7 @@ public abstract class FintKafkaEntityProducer {
         this.endpointUrl = this.getEndpointUrl();
         // TODO: 12/11/2021 Valider endepunkt
         this.kafkaTemplate = kafkaTemplate;
-        this.topicName = FintTopicUtilities.getTopicNameFromEndpointUrl(endpointUrl);
+        this.topicName = FintTopicUtilities.getEntityTopicNameFromEndpointUrl(endpointUrl);
         new NewTopic(topicName, 1, (short) 1);
         this.fintClient = fintClient;
     }
