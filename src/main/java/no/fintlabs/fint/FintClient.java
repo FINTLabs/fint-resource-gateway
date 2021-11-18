@@ -20,13 +20,13 @@ public class FintClient {
         this.webClient = webClient;
     }
 
-    public Mono<List<Object>> getResources(String endpoint) {
-        return get(endpoint)
+    public Mono<List<Object>> getResourcesLastUpdated(String endpoint) {
+        return getLastUpdated(endpoint)
                 .flatMapIterable(ObjectResources::getContent)
                 .collect(Collectors.toList());
     }
 
-    private Mono<ObjectResources> get(String endpoint) {
+    private Mono<ObjectResources> getLastUpdated(String endpoint) {
          return webClient.get()
                 .uri(endpoint.concat("/last-updated"))
                 .retrieve()
@@ -36,6 +36,13 @@ public class FintClient {
                         .retrieve()
                         .bodyToMono(ObjectResources.class)
                         .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated())));
+    }
+
+    public Mono<Object> getResource(String endpoint) {
+        return webClient.get()
+                .uri(endpoint)
+                .retrieve()
+                .bodyToMono(Object.class);
     }
 
     @Data

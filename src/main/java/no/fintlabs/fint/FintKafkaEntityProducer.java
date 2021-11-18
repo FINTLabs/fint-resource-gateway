@@ -41,7 +41,7 @@ public abstract class FintKafkaEntityProducer {
     protected void pollResources() {
         log.info("Polling resources from " + endpointUrl);
 
-        Objects.requireNonNull(fintClient.getResources(endpointUrl).block())
+        Objects.requireNonNull(fintClient.getResourcesLastUpdated(endpointUrl).block())
                 .stream()
                 .map(r -> ((HashMap<String, ?>) r))
                 //.filter(o -> o.getSelfLinks().stream().anyMatch(link -> link.getHref().toLowerCase().contains("systemid")))
