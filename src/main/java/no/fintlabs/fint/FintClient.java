@@ -45,6 +45,13 @@ public class FintClient {
                 .bodyToMono(Object.class);
     }
 
+    public <T> Mono<T> getResource(String endpoint, Class<T> clazz) {
+        return webClient.get()
+                .uri(endpoint)
+                .retrieve()
+                .bodyToMono(clazz);
+    }
+
     @Data
     private static class LastUpdated {
         private Long lastUpdated;

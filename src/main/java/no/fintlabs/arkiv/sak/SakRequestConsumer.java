@@ -1,8 +1,9 @@
-package no.fintlabs.arkiv.noark;
+package no.fintlabs.arkiv.sak;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import no.fint.model.resource.arkiv.noark.SakResource;
 import no.fintlabs.fint.FintClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -22,31 +23,34 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Component
-public class SoknadDrosjeloyveRequestConsumer {
+public class SakRequestConsumer {
 
     private final FintClient fintClient;
 
-    public SoknadDrosjeloyveRequestConsumer(FintClient fintClient) {
+    public SakRequestConsumer(FintClient fintClient) {
         this.fintClient = fintClient;
     }
 
-    @KafkaListener(topics = "request.arkiv.samferdsel.soknaddrosjeloyve.all")
+    @KafkaListener(topics = "request.arkiv.noark.sak.systemid")
     @SendTo
-    public List<Object> listenAll() {
-        return fintClient.getResourcesLastUpdated("/arkiv/samferdsel/soknaddrosjeloyve/").block();
+    public SakResource listenSystemId(String systemId) {
+        SakResource result = fintClient
+                .getResource("/arkiv/noark/sak/systemid/" + systemId, SakResource.class)
+                .block();
+
+        log.info("Returning: " + result);
+        return result;
     }
 
-    @KafkaListener(topics = "request.arkiv.samferdsel.soknaddrosjeloyve.systemid")
+    @KafkaListener(topics = "request.arkiv.noark.sak.mappeid")
     @SendTo
-    public Object listenSystemId(String systemId) {
-        Object result = fintClient.getResource("/arkiv/samferdsel/soknaddrosjeloyve/systemid/" + systemId)
-                //.map(r -> ((HashMap<String, ?>) r)) // TODO: 15/11/2021 Cast in service?
-                //.filter(r -> ((HashMap<String, String>) r.get("systemId")).get("identifikatorverdi").equals(systemId)) // TODO: 15/11/2021 Sentralize
+    public SakResource listenMappeId(String mappeId) {
+        SakResource result = fintClient
+                .getResource("/arkiv/noark/sak/mappeid/" + mappeId, SakResource.class)
                 .block();
 
         log.info("Returning: " + result);
@@ -56,7 +60,7 @@ public class SoknadDrosjeloyveRequestConsumer {
     // Default Consumer Factory
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<String, String>(consumerConfigs(), new StringDeserializer(), new StringDeserializer());
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(), new StringDeserializer());
     }
 
     private Map<String, Object> consumerConfigs() {

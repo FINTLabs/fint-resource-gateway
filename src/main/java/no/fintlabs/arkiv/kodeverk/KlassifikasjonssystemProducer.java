@@ -1,11 +1,4 @@
-package no.fintlabs.arkiv.noark;
-
-import lombok.extern.slf4j.Slf4j;
-import no.fintlabs.fint.FintClient;
-import no.fintlabs.fint.FintKafkaEntityProducer;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+package no.fintlabs.arkiv.kodeverk;
 
 //@Slf4j
 //@Component

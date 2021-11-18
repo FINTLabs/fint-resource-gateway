@@ -1,10 +1,4 @@
-package no.fintlabs.arkiv.noark;
-
-import no.fintlabs.fint.FintClient;
-import no.fintlabs.fint.FintKafkaEntityProducer;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+package no.fintlabs.arkiv.kodeverk;
 
 //@Component
 //public class AdministrativEnhetEntityProducer extends FintKafkaEntityProducer {
