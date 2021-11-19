@@ -27,11 +27,11 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class SakRequestConsumer {
+public class SakRequestComponent {
 
     private final FintClient fintClient;
 
-    public SakRequestConsumer(FintClient fintClient) {
+    public SakRequestComponent(FintClient fintClient) {
         this.fintClient = fintClient;
     }
 

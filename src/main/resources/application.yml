@@ -4,6 +4,20 @@ fint:
     username: ''
     base-url: https://beta.felleskomponent.no
     registration-id: fint
+  kodeverk:
+    resources:
+      polling:
+        initialDelay: 5000
+        fixedDelay: 200000
+      defaultTopicPartitions: 1
+      defaultTopicReplications: 1
+      entityPipelines:
+        - kafkaTopic: entity.arkiv.noark.administrativenhet
+          fintEndpoint: /arkiv/noark/administrativenhet
+        - kafkaTopic: entity.arkiv.noark.klassifikasjonssystem
+          fintEndpoint: /arkiv/noark/klassifikasjonssystem
+        - kafkaTopic: entity.arkiv.kodeverk.rolle
+          fintEndpoint: /arkiv/kodeverk/rolle
 spring:
   security:
     oauth2:

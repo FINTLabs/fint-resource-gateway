@@ -1,8 +1,6 @@
 package no.fintlabs.kafka
 
 import no.fint.model.arkiv.kodeverk.Rolle
-
-import no.fintlabs.fint.FintTopicUtilities
 import spock.lang.Specification
 
 class FintTopicUtilitiesSpec extends Specification {

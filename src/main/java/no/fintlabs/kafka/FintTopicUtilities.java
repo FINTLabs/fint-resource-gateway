@@ -1,4 +1,4 @@
-package no.fintlabs.fint;
+package no.fintlabs.kafka;
 
 import org.springframework.util.StringUtils;
 

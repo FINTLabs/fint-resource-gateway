@@ -9,6 +9,11 @@
       "name": "fint.client.password",
       "type": "java.lang.String",
       "description": "Description for fint.client.password."
+    },
+    {
+      "name": "fint.kodeverk.resourcesUris",
+      "type": "java.util.List<no.fintlabs.kafka.EntityPipelineConfiguration>",
+      "description": "Description for fint.kodeverk.resources.uris."
     }
   ]
 }

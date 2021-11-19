@@ -1,6 +1,9 @@
-package no.fintlabs.fint;
+package no.fintlabs.kafka.producers;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fintlabs.fint.FintClient;
+import no.fintlabs.fint.FintListendableFutureCallback;
+import no.fintlabs.kafka.FintTopicUtilities;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.kafka.core.KafkaTemplate;
 
