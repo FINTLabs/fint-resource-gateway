@@ -18,6 +18,24 @@ fint:
           fintEndpoint: /arkiv/noark/klassifikasjonssystem
         - kafkaTopic: entity.arkiv.kodeverk.rolle
           fintEndpoint: /arkiv/kodeverk/rolle
+        - kafkaTopic: entity.arkiv.kodeverk.saksstatus
+          fintEndpoint: /arkiv/kodeverk/saksstatus
+        - kafkaTopic: entity.arkiv.noark.arkivdel
+          fintEndpoint: /arkiv/noark/arkivdel
+        - kafkaTopic: entity.arkiv.kodeverk.skjermingshjemmel
+          fintEndpoint: /arkiv/kodeverk/skjermingshjemmel
+        - kafkaTopic: entity.arkiv.kodeverk.tilgangsrestriksjon
+          fintEndpoint: /arkiv/kodeverk/tilgangsrestriksjon
+        - kafkaTopic: entity.arkiv.kodeverk.klassifikasjonstype
+          fintEndpoint: /arkiv/kodeverk/klassifikasjonstype
+        - kafkaTopic: entity.arkiv.kodeverk.klassifikasjonstype
+          fintEndpoint: /arkiv/kodeverk/klassifikasjonstype
+        #- kafkaTopic: entity.arkiv.noark.klasse
+        #  fintEndpoint: /arkiv/noark/klasse
+        - kafkaTopic: entity.arkiv.kodeverk.dokumentstatus
+          fintEndpoint: /arkiv/kodeverk/dokumentstatus
+        - kafkaTopic: entity.arkiv.kodeverk.dokumenttype
+          fintEndpoint: /arkiv/kodeverk/dokumenttype
 spring:
   security:
     oauth2:
