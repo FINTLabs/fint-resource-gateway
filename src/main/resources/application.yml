@@ -28,8 +28,6 @@ fint:
           fintEndpoint: /arkiv/kodeverk/tilgangsrestriksjon
         - kafkaTopic: entity.arkiv.kodeverk.klassifikasjonstype
           fintEndpoint: /arkiv/kodeverk/klassifikasjonstype
-        - kafkaTopic: entity.arkiv.kodeverk.klassifikasjonstype
-          fintEndpoint: /arkiv/kodeverk/klassifikasjonstype
         #- kafkaTopic: entity.arkiv.noark.klasse
         #  fintEndpoint: /arkiv/noark/klasse
         - kafkaTopic: entity.arkiv.kodeverk.dokumentstatus
