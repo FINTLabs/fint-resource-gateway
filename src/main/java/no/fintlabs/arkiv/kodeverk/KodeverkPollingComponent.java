@@ -3,12 +3,11 @@ package no.fintlabs.arkiv.kodeverk;
 import lombok.extern.slf4j.Slf4j;
 import no.fintlabs.fint.FintClient;
 import no.fintlabs.kafka.producers.FintKafkaEntityMultiProducer;
-import no.fintlabs.kafka.KodeverkConfiguration;
-import no.fintlabs.kafka.EntityPipelineConfiguration;
+import no.fintlabs.kafka.configuration.KodeverkConfiguration;
+import no.fintlabs.kafka.configuration.EntityPipelineConfiguration;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,21 +51,21 @@ public class KodeverkPollingComponent {
     @Scheduled(
             initialDelayString = "${fint.kodeverk.resources.polling.initialDelay}",
             fixedDelayString = "${fint.kodeverk.resources.polling.fixedDelay}")
-    private void pollingSchedule() {
+    private void pollAllEntityResources() {
         log.info("Starting polling kodeverk resources");
         kodeverkConfiguration.getResources().getEntityPipelines().forEach(this::pollEntityResources);
         log.info("Completed polling kodeverk resources");
     }
 
     private void pollEntityResources(EntityPipelineConfiguration config) {
-        List<HashMap<String, Object>> resources = getResources(config.getFintEndpoint());
+        List<HashMap<String, Object>> resources = getUpdatedResources(config.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
             String key = getKey(resource);
             fintKafkaEntityMultiProducer.sendMessage(config.getKafkaTopic(), key, resource);
         }
     }
 
-    private List<HashMap<String, Object>> getResources(String endpointUrl) {
+    private List<HashMap<String, Object>> getUpdatedResources(String endpointUrl) {
         return Objects.requireNonNull(fintClient.getResourcesLastUpdated(endpointUrl).block())
                 .stream()
                 .map(r -> ((HashMap<String, Object>) r))

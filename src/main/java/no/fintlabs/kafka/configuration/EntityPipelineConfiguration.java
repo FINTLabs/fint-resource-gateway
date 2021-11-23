@@ -1,4 +1,4 @@
-package no.fintlabs.kafka;
+package no.fintlabs.kafka.configuration;
 
 import lombok.Data;
 import org.springframework.context.annotation.Configuration;

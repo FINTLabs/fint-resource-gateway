@@ -1,4 +1,4 @@
-package no.fintlabs.fint;
+package no.fintlabs.kafka.producers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.support.SendResult;
@@ -7,7 +7,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import java.util.Objects;
 
 @Slf4j
-public class FintListendableFutureCallback implements ListenableFutureCallback<SendResult<String, Object>> {
+public class FintListenableFutureCallback implements ListenableFutureCallback<SendResult<String, Object>> {
 
 
     @Override

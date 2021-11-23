@@ -12,7 +12,7 @@
     },
     {
       "name": "fint.kodeverk.resourcesUris",
-      "type": "java.util.List<no.fintlabs.kafka.EntityPipelineConfiguration>",
+      "type": "java.util.List<no.fintlabs.kafka.configuration.EntityPipelineConfiguration>",
       "description": "Description for fint.kodeverk.resources.uris."
     }
   ]

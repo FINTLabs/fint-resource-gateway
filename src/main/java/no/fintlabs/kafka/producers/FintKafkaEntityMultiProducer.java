@@ -1,7 +1,6 @@
 package no.fintlabs.kafka.producers;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fintlabs.fint.FintListendableFutureCallback;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +17,6 @@ public class FintKafkaEntityMultiProducer {
     public void sendMessage(String topicName, String key, Object object) {
         kafkaTemplate
                 .send(topicName, key, object)
-                .addCallback(new FintListendableFutureCallback());
+                .addCallback(new FintListenableFutureCallback());
     }
 }

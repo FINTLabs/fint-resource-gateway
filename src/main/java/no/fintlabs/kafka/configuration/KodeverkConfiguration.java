@@ -1,4 +1,4 @@
-package no.fintlabs.kafka;
+package no.fintlabs.kafka.configuration;
 
 import lombok.Getter;
 import lombok.Setter;
