@@ -27,7 +27,7 @@ public class FintClient {
     }
 
     private Mono<ObjectResources> getLastUpdated(String endpoint) {
-         return webClient.get()
+        return webClient.get()
                 .uri(endpoint.concat("/last-updated"))
                 .retrieve()
                 .bodyToMono(LastUpdated.class)
@@ -35,7 +35,8 @@ public class FintClient {
                         .uri(endpoint, uriBuilder -> uriBuilder.queryParam("sinceTimeStamp", sinceTimestamp.getOrDefault(endpoint, 0L)).build())
                         .retrieve()
                         .bodyToMono(ObjectResources.class)
-                        .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated())));
+                        .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated()))
+                );
     }
 
     public Mono<Object> getResource(String endpoint) {

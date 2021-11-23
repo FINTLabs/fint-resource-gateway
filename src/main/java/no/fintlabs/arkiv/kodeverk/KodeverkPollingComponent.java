@@ -2,13 +2,15 @@ package no.fintlabs.arkiv.kodeverk;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fintlabs.fint.FintClient;
-import no.fintlabs.kafka.producers.FintKafkaEntityMultiProducer;
-import no.fintlabs.kafka.configuration.KodeverkConfiguration;
 import no.fintlabs.kafka.configuration.EntityPipelineConfiguration;
+import no.fintlabs.kafka.configuration.KodeverkConfiguration;
+import no.fintlabs.kafka.producers.FintKafkaEntityMultiProducer;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClientException;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -51,13 +53,13 @@ public class KodeverkPollingComponent {
     @Scheduled(
             initialDelayString = "${fint.kodeverk.resources.polling.initialDelay}",
             fixedDelayString = "${fint.kodeverk.resources.polling.fixedDelay}")
-    private void pollAllEntityResources() {
+    private void pullAllUpdatedEntityResources() {
         log.info("Starting polling kodeverk resources");
-        kodeverkConfiguration.getResources().getEntityPipelines().forEach(this::pollEntityResources);
+        kodeverkConfiguration.getResources().getEntityPipelines().forEach(this::pullUpdatedEntityResources);
         log.info("Completed polling kodeverk resources");
     }
 
-    private void pollEntityResources(EntityPipelineConfiguration config) {
+    private void pullUpdatedEntityResources(EntityPipelineConfiguration config) {
         List<HashMap<String, Object>> resources = getUpdatedResources(config.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
             String key = getKey(resource);
@@ -66,10 +68,15 @@ public class KodeverkPollingComponent {
     }
 
     private List<HashMap<String, Object>> getUpdatedResources(String endpointUrl) {
-        return Objects.requireNonNull(fintClient.getResourcesLastUpdated(endpointUrl).block())
-                .stream()
-                .map(r -> ((HashMap<String, Object>) r))
-                .collect(Collectors.toList());
+        try {
+            return Objects.requireNonNull(fintClient.getResourcesLastUpdated(endpointUrl).block())
+                    .stream()
+                    .map(r -> ((HashMap<String, Object>) r))
+                    .collect(Collectors.toList());
+        } catch (WebClientException e) {
+            log.error("Could not pull entities from endpoint=" + endpointUrl, e);
+            return Collections.emptyList();
+        }
     }
 
     // TODO: 19/11/2021 Handle exceptions (casting and no systemid)
