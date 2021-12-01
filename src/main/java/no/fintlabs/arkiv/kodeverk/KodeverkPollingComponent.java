@@ -2,10 +2,11 @@ package no.fintlabs.arkiv.kodeverk;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fintlabs.fint.FintClient;
+import no.fintlabs.kafka.configuration.EntityPipeline;
 import no.fintlabs.kafka.configuration.EntityPipelineConfiguration;
+import no.fintlabs.kafka.configuration.EntityPipelineFactory;
 import no.fintlabs.kafka.configuration.KodeverkConfiguration;
-import no.fintlabs.kafka.producers.FintKafkaEntityMultiProducer;
-import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
@@ -20,34 +21,29 @@ import java.util.stream.Collectors;
 @Component
 public class KodeverkPollingComponent {
 
-    private final KodeverkConfiguration kodeverkConfiguration;
-    private final FintKafkaEntityMultiProducer fintKafkaEntityMultiProducer;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     private final FintClient fintClient;
+    private final List<EntityPipeline> entityPipelines;
 
-    public KodeverkPollingComponent(KodeverkConfiguration kafkaAdminConfiguration, FintKafkaEntityMultiProducer fintKafkaEntityMultiProducer, FintClient fintClient) {
-        this.kodeverkConfiguration = kafkaAdminConfiguration;
-        this.fintKafkaEntityMultiProducer = fintKafkaEntityMultiProducer;
+    public KodeverkPollingComponent(
+            KodeverkConfiguration kodeverkConfiguration,
+            EntityPipelineFactory entityPipelineFactory,
+            KafkaTemplate<String, Object> kafkaTemplate,
+            FintClient fintClient) {
+        this.kafkaTemplate = kafkaTemplate;
         this.fintClient = fintClient;
-        this.initializeTopics();
-    }
-
-    private void initializeTopics() {
-        log.info("Starting initializing topics");
-        kodeverkConfiguration.getResources().getEntityPipelines().forEach(this::initializeTopic);
-        log.info("Completed initializing topics");
-    }
-
-    private void initializeTopic(EntityPipelineConfiguration config) {
-        NewTopic topic = new NewTopic(
-                config.getKafkaTopic(),
-                config.getTopicPartitions() > 0
-                        ? config.getTopicPartitions()
-                        : kodeverkConfiguration.getResources().getDefaultTopicPartitions(),
-                (short) (config.getTopicReplications() > 0
-                        ? config.getTopicReplications()
-                        : kodeverkConfiguration.getResources().getDefaultTopicReplications())
+        this.entityPipelines = this.createEntityPipelines(
+                entityPipelineFactory,
+                kodeverkConfiguration.getResources().getEntityPipelines()
         );
-        log.info("Initialized topic: " + topic);
+    }
+
+    private List<EntityPipeline> createEntityPipelines(
+            EntityPipelineFactory entityPipelineFactory,
+            List<EntityPipelineConfiguration> configs) {
+        return configs.stream()
+                .map(entityPipelineFactory::create)
+                .collect(Collectors.toList());
     }
 
     @Scheduled(
@@ -55,15 +51,15 @@ public class KodeverkPollingComponent {
             fixedDelayString = "${fint.kodeverk.resources.polling.fixedDelay}")
     private void pullAllUpdatedEntityResources() {
         log.info("Starting polling kodeverk resources");
-        kodeverkConfiguration.getResources().getEntityPipelines().forEach(this::pullUpdatedEntityResources);
+        entityPipelines.forEach(this::pullUpdatedEntityResources);
         log.info("Completed polling kodeverk resources");
     }
 
-    private void pullUpdatedEntityResources(EntityPipelineConfiguration config) {
-        List<HashMap<String, Object>> resources = getUpdatedResources(config.getFintEndpoint());
+    private void pullUpdatedEntityResources(EntityPipeline entityPipeline) {
+        List<HashMap<String, Object>> resources = getUpdatedResources(entityPipeline.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
             String key = getKey(resource);
-            fintKafkaEntityMultiProducer.sendMessage(config.getKafkaTopic(), key, resource);
+            kafkaTemplate.send(entityPipeline.getKafkaTopic().name(), key, resource);
         }
     }
 

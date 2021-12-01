@@ -18,8 +18,6 @@ public class KodeverkConfiguration {
 
     public static class Resources {
 
-        @Getter @Setter private int defaultTopicPartitions;
-        @Getter @Setter private int defaultTopicReplications;
         @Getter @Setter private List<EntityPipelineConfiguration> entityPipelines;
 
     }

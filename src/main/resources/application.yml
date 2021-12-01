@@ -1,4 +1,5 @@
 fint:
+  org-id: testOrgId
   client:
     password: ''
     username: ''
@@ -9,31 +10,18 @@ fint:
       polling:
         initialDelay: 5000
         fixedDelay: 200000
-      defaultTopicPartitions: 1
-      defaultTopicReplications: 1
       entityPipelines:
-        - kafkaTopic: entity.arkiv.noark.administrativenhet
-          fintEndpoint: /arkiv/noark/administrativenhet
-        - kafkaTopic: entity.arkiv.noark.klassifikasjonssystem
-          fintEndpoint: /arkiv/noark/klassifikasjonssystem
-        - kafkaTopic: entity.arkiv.kodeverk.rolle
-          fintEndpoint: /arkiv/kodeverk/rolle
-        - kafkaTopic: entity.arkiv.kodeverk.saksstatus
-          fintEndpoint: /arkiv/kodeverk/saksstatus
-        - kafkaTopic: entity.arkiv.noark.arkivdel
-          fintEndpoint: /arkiv/noark/arkivdel
-        - kafkaTopic: entity.arkiv.kodeverk.skjermingshjemmel
-          fintEndpoint: /arkiv/kodeverk/skjermingshjemmel
-        - kafkaTopic: entity.arkiv.kodeverk.tilgangsrestriksjon
-          fintEndpoint: /arkiv/kodeverk/tilgangsrestriksjon
-        - kafkaTopic: entity.arkiv.kodeverk.klassifikasjonstype
-          fintEndpoint: /arkiv/kodeverk/klassifikasjonstype
-        - kafkaTopic: entity.arkiv.noark.klasse
-          fintEndpoint: /arkiv/noark/klasse
-        - kafkaTopic: entity.arkiv.kodeverk.dokumentstatus
-          fintEndpoint: /arkiv/kodeverk/dokumentstatus
-        - kafkaTopic: entity.arkiv.kodeverk.dokumenttype
-          fintEndpoint: /arkiv/kodeverk/dokumenttype
+        - resourceReference: arkiv.noark.administrativenhet
+        - resourceReference: arkiv.noark.klassifikasjonssystem
+        - resourceReference: arkiv.kodeverk.rolle
+        - resourceReference: arkiv.kodeverk.saksstatus
+        - resourceReference: arkiv.noark.arkivdel
+        - resourceReference: arkiv.kodeverk.skjermingshjemmel
+        - resourceReference: arkiv.kodeverk.tilgangsrestriksjon
+        - resourceReference: arkiv.kodeverk.klassifikasjonstype
+        - resourceReference: arkiv.noark.klasse
+        - resourceReference: arkiv.kodeverk.dokumentstatus
+        - resourceReference: arkiv.kodeverk.dokumenttype
 spring:
   security:
     oauth2:

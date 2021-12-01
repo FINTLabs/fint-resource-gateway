@@ -7,9 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EntityPipelineConfiguration {
 
+    private String resourceReference;
     private String kafkaTopic;
     private String fintEndpoint;
-    private int topicPartitions;
-    private int topicReplications;
 
 }
