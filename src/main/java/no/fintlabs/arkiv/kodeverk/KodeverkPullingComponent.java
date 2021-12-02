@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class KodeverkPollingComponent {
+public class KodeverkPullingComponent {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final FintClient fintClient;
     private final List<EntityPipeline> entityPipelines;
 
-    public KodeverkPollingComponent(
+    public KodeverkPullingComponent(
             KodeverkConfiguration kodeverkConfiguration,
             EntityPipelineFactory entityPipelineFactory,
             KafkaTemplate<String, Object> kafkaTemplate,
