@@ -1,5 +1,5 @@
 fint:
-  org-id: testOrgId
+  org-id: fintlabs.no
   client:
     password: ''
     username: ''
