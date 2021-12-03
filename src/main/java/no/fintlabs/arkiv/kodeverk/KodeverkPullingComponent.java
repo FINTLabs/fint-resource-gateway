@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+// TODO: 03/12/2021 Rename to FintResourcePublishingComponent
 @Slf4j
 @Component
 public class KodeverkPullingComponent {
@@ -58,7 +59,7 @@ public class KodeverkPullingComponent {
     private void pullUpdatedEntityResources(EntityPipeline entityPipeline) {
         List<HashMap<String, Object>> resources = getUpdatedResources(entityPipeline.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
-            String key = getKey(resource);
+            String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
             kafkaTemplate.send(entityPipeline.getKafkaTopic().name(), key, resource);
         }
     }
@@ -76,15 +77,15 @@ public class KodeverkPullingComponent {
     }
 
     // TODO: 19/11/2021 Handle exceptions (casting and no systemid)
-    private String getKey(HashMap<String, Object> resource) {
+    private String getKey(HashMap<String, Object> resource, String selfLinkKeyFilter) {
         HashMap<String, Object> links = (HashMap<String, Object>) resource.get("_links");
         List<HashMap<String, String>> selfLinks = (List<HashMap<String, String>>) links.get("self");
         return selfLinks.stream()
                 .filter(o -> o.containsKey("href"))
                 .map(o -> o.get("href"))
-                .filter(o -> o.toLowerCase().contains("systemid"))
+                .filter(o -> o.toLowerCase().contains(selfLinkKeyFilter))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("No systemid to generate key"));
+                .orElseThrow(() -> new IllegalStateException(String.format("No %s to generate key for resource=%s", selfLinkKeyFilter, resource)));
     }
 
 }

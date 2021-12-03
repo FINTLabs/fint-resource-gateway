@@ -24,6 +24,10 @@ public class EntityPipelineFactory {
                 ? configuration.getFintEndpoint()
                 : "/" + configuration.getResourceReference().replace(".", "/");
 
-        return new EntityPipeline(topic, fintEndpoint);
+        String selfLinkKeyFilter = StringUtils.isNotEmpty(configuration.getSelfLinkKeyFilter())
+                ? configuration.getSelfLinkKeyFilter()
+                : "systemid";
+
+        return new EntityPipeline(topic, fintEndpoint, selfLinkKeyFilter);
     }
 }

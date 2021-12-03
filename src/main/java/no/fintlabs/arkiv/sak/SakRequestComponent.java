@@ -22,22 +22,6 @@ public class SakRequestComponent {
     }
 
     @Bean
-    String sakRequestBySystemIdTopicName(TopicNameService topicNameService) {
-        return topicNameService.generateRequestTopicName("arkiv.noark.sak","systemid");
-    }
-
-    @KafkaListener(topics = "#{sakRequestBySystemIdTopicName}")
-    @SendTo
-    public SakResource listenSystemId(String systemId) {
-        SakResource result = fintClient
-                .getResource("/arkiv/noark/sak/systemid/" + systemId, SakResource.class)
-                .block();
-
-        log.info("Returning: " + result);
-        return result;
-    }
-
-    @Bean
     String sakRequestByMappeIdTopicName(TopicNameService topicNameService) {
         return topicNameService.generateRequestTopicName("arkiv.noark.sak","mappeid");
     }

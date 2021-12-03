@@ -8,8 +8,10 @@ import org.apache.kafka.clients.admin.NewTopic;
 public class EntityPipeline {
 
     @Getter
-    NewTopic kafkaTopic;
+    private NewTopic kafkaTopic;
     @Getter
-    String fintEndpoint;
+    private String fintEndpoint;
+    @Getter
+    private String selfLinkKeyFilter;
 
 }
