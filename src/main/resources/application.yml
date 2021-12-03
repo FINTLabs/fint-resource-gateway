@@ -7,6 +7,8 @@ fint:
     registration-id: fint
   kodeverk:
     resources:
+      resend:
+        cron: 0 0 0 */6 * *
       polling:
         initialDelay: 5000
         fixedDelay: 200000

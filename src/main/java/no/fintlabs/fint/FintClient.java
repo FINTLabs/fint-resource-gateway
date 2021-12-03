@@ -26,6 +26,10 @@ public class FintClient {
                 .collect(Collectors.toList());
     }
 
+    public void resetLastUpdatedTimestamps() {
+        this.sinceTimestamp.clear();
+    }
+
     private Mono<ObjectResources> getLastUpdated(String endpoint) {
         return webClient.get()
                 .uri(endpoint.concat("/last-updated"))

@@ -47,6 +47,12 @@ public class KodeverkPullingComponent {
                 .collect(Collectors.toList());
     }
 
+    @Scheduled(cron = "${fint.kodeverk.resources.resend.cron}")
+    private void resetLastUpdatedTimestamps() {
+        log.warn("Resetting last updated timestamps");
+        this.fintClient.resetLastUpdatedTimestamps();
+    }
+
     @Scheduled(
             initialDelayString = "${fint.kodeverk.resources.polling.initialDelay}",
             fixedDelayString = "${fint.kodeverk.resources.polling.fixedDelay}")
