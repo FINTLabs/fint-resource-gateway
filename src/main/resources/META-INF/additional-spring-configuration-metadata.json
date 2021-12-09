@@ -1,6 +1,11 @@
 {
   "properties": [
     {
+      "name": "fint.org-id",
+      "type": "java.lang.String",
+      "description": "Description for fint.org-id."
+    },
+    {
       "name": "fint.client.username",
       "type": "java.lang.String",
       "description": "Description for fint.client.username."
@@ -9,6 +14,26 @@
       "name": "fint.client.password",
       "type": "java.lang.String",
       "description": "Description for fint.client.password."
+    },
+    {
+      "name": "fint.kodeverk.resourcesUris",
+      "type": "java.util.List<no.fintlabs.kafka.configuration.EntityPipelineConfiguration>",
+      "description": "Description for fint.kodeverk.resources.uris."
+    },
+    {
+      "name": "fint.kodeverk.resources.resend.cron",
+      "type": "java.lang.String",
+      "description": "Description for fint.kodeverk.resources.resend.cron."
+    },
+    {
+      "name": "fint.kodeverk.resources.polling.initialDelay",
+      "type": "java.lang.String",
+      "description": "Description for fint.kodeverk.resources.polling.initialDelay."
+    },
+    {
+      "name": "fint.kodeverk.resources.polling.fixedDelay",
+      "type": "java.lang.String",
+      "description": "Description for fint.kodeverk.resources.polling.fixedDelay."
     }
   ]
 }

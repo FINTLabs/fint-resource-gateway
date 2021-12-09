@@ -1,7 +1,6 @@
 package no.fintlabs.fint;
 
 import lombok.Data;
-import no.fint.model.resource.AbstractCollectionResources;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -21,15 +20,17 @@ public class FintClient {
         this.webClient = webClient;
     }
 
-    public <S, T extends AbstractCollectionResources<S>> Mono<List<S>> getResources(Class<T> clazz, String endpoint) {
-
-        return get(clazz, endpoint)
-                .flatMapIterable(T::getContent)
+    public Mono<List<Object>> getResourcesLastUpdated(String endpoint) {
+        return getLastUpdated(endpoint)
+                .flatMapIterable(ObjectResources::getContent)
                 .collect(Collectors.toList());
     }
 
-    public <T> Mono<T> get(Class<T> clazz, String endpoint) {
+    public void resetLastUpdatedTimestamps() {
+        this.sinceTimestamp.clear();
+    }
 
+    private Mono<ObjectResources> getLastUpdated(String endpoint) {
         return webClient.get()
                 .uri(endpoint.concat("/last-updated"))
                 .retrieve()
@@ -37,8 +38,23 @@ public class FintClient {
                 .flatMap(lastUpdated -> webClient.get()
                         .uri(endpoint, uriBuilder -> uriBuilder.queryParam("sinceTimeStamp", sinceTimestamp.getOrDefault(endpoint, 0L)).build())
                         .retrieve()
-                        .bodyToMono(clazz)
-                        .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated())));
+                        .bodyToMono(ObjectResources.class)
+                        .doOnNext(it -> sinceTimestamp.put(endpoint, lastUpdated.getLastUpdated()))
+                );
+    }
+
+    public Mono<Object> getResource(String endpoint) {
+        return webClient.get()
+                .uri(endpoint)
+                .retrieve()
+                .bodyToMono(Object.class);
+    }
+
+    public <T> Mono<T> getResource(String endpoint, Class<T> clazz) {
+        return webClient.get()
+                .uri(endpoint)
+                .retrieve()
+                .bodyToMono(clazz);
     }
 
     @Data
