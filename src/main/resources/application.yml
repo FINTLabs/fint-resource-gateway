@@ -1,0 +1,66 @@
+fint:
+  org-id: fintlabs.no
+  client:
+    password: ''
+    username: ''
+    base-url: https://beta.felleskomponent.no
+    registration-id: fint
+  kodeverk:
+    resources:
+      resend:
+        cron: 0 0 0 */6 * *
+      polling:
+        initialDelay: 5000
+        fixedDelay: 200000
+      entityPipelines:
+        - resourceReference: arkiv.noark.administrativenhet
+        - resourceReference: arkiv.noark.klassifikasjonssystem
+        - resourceReference: arkiv.kodeverk.rolle
+        - resourceReference: arkiv.kodeverk.saksstatus
+        - resourceReference: arkiv.noark.arkivdel
+        - resourceReference: arkiv.kodeverk.skjermingshjemmel
+        - resourceReference: arkiv.kodeverk.tilgangsrestriksjon
+        - resourceReference: arkiv.kodeverk.klassifikasjonstype
+        - resourceReference: arkiv.noark.klasse
+        - resourceReference: arkiv.kodeverk.dokumentstatus
+        - resourceReference: arkiv.kodeverk.dokumenttype
+        - resourceReference: arkiv.noark.arkivressurs
+        - resourceReference: administrasjon.personal.personalressurs
+          selfLinkKeyFilter: ansattnummer
+        - resourceReference: administrasjon.personal.person
+          selfLinkKeyFilter: fodselsnummer
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          fint-idp:
+            token-uri: https://idp.felleskomponent.no/nidp/oauth/nam/token
+        registration:
+          fint:
+            authorization-grant-type: password
+            client-id:
+            client-secret:
+            provider: fint-idp
+            scope: fint-client
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:29092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+    producer:
+      bootstrap-servers: localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+logging:
+  level:
+    org:
+      apache:
+        kafka: ERROR
