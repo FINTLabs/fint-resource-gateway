@@ -37,7 +37,8 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}
+        #- image: fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}
+        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.10_594d9563623b8fe6f149a83a9b8f27271047bd15
           name: fint-resource-gateway
           resources:
             limits:
@@ -48,11 +49,11 @@ spec:
               cpu: "100m"
           ports:
             - containerPort: 8080
-          env-from:
-            - secretRef:
-              name: skjema-resource-gateway
+          envFrom:
+          - secretRef:
+              name: "skjema-resource-gateway"
           env:
-            - name: TZ
-              value: Europe/Oslo
-            - name: JAVA_TOOL_OPTIONS
-              value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc'
+            - {name: TZ, value: Europe/Oslo}
+            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc'}
+            - {name: spring.kafka.consumer.bootstrap-servers, value: ''}
+            - {name: spring.kafka.consumer.bootstrap-servers, value: ''}
