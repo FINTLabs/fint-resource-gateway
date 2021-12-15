@@ -3,6 +3,8 @@ kind: Service
 metadata:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    operator.1password.io/item-path: "vaults/aks-alpha-vault/items/skjema-resource-gateway"
+    operator.1password.io/item-name: "skjema-resource-gateway"
   labels:
     io.kompose.service: fint-resource-gateway
   name: fint-resource-gateway
@@ -46,6 +48,9 @@ spec:
               cpu: "100m"
           ports:
             - containerPort: 8080
+          env-from:
+            - secretRef:
+              name: skjema-resource-gateway
           env:
             - name: TZ
               value: Europe/Oslo

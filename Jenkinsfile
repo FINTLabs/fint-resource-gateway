@@ -18,7 +18,7 @@ pipeline {
                 /**
                  * Uncomment to auto deploy to your prefered environment
                  */
-                kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'aks-alpha-fint-2021-11-18'
+                //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'aks-alpha-fint-2021-11-18'
                 //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'aks-beta-fint'
                 //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'aks-api-fint'
 
