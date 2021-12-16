@@ -3,8 +3,6 @@ kind: Service
 metadata:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    operator.1password.io/item-path: "vaults/aks-alpha-vault/items/skjema-resource-gateway"
-    operator.1password.io/item-name: "skjema-resource-gateway"
   labels:
     io.kompose.service: fint-resource-gateway
   name: fint-resource-gateway
@@ -20,6 +18,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    operator.1password.io/item-path: "vaults/aks-alpha-vault/items/skjema-resource-gateway"
+    operator.1password.io/item-name: "skjema-resource-gateway"
   labels:
     io.kompose.service: fint-resource-gateway
   name: fint-resource-gateway
@@ -54,6 +54,8 @@ spec:
               name: "skjema-resource-gateway"
           env:
             - {name: TZ, value: Europe/Oslo}
-            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc'}
-            - {name: spring.kafka.consumer.bootstrap-servers, value: ''}
-            - {name: spring.kafka.consumer.bootstrap-servers, value: ''}
+            #- {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc'}
+            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M'}
+            - {name: spring.kafka.consumer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
+            - {name: spring.kafka.producer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
+            - {name: spring.kafka.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
