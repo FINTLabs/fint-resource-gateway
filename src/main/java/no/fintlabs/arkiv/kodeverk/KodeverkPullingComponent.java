@@ -47,7 +47,7 @@ public class KodeverkPullingComponent {
                 .collect(Collectors.toList());
     }
 
-    @Scheduled(cron = "${fint.kodeverk.resources.resend.cron}")
+    @Scheduled(cron = "${fint.kafka.resourceRefreshCron}")
     private void resetLastUpdatedTimestamps() {
         log.warn("Resetting last updated timestamps");
         this.fintClient.resetLastUpdatedTimestamps();
