@@ -38,14 +38,14 @@ spec:
       restartPolicy: Always
       containers:
         #- image: fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}
-        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.11_e4bf4a7f0701891736f5e008c3c5bcbaf4c370f9
+        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.12_005ca14e0a23fb67d66d5cab0cf8742e8dfd699b
           name: fint-resource-gateway
           resources:
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
               cpu: "1"
             requests:
-              memory: "128Mi"
+              memory: "256Mi"
               cpu: "100m"
           ports:
             - containerPort: 8080
@@ -55,7 +55,7 @@ spec:
           env:
             - {name: TZ, value: Europe/Oslo}
             #- {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc'}
-            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M'}
+            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx920M'}
             - {name: spring.kafka.consumer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
             - {name: spring.kafka.producer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
             - {name: spring.kafka.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
