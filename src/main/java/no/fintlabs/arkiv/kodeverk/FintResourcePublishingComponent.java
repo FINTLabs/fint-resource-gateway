@@ -17,16 +17,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// TODO: 03/12/2021 Rename to FintResourcePublishingComponent
 @Slf4j
 @Component
-public class KodeverkPullingComponent {
+public class FintResourcePublishingComponent {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final FintClient fintClient;
     private final List<EntityPipeline> entityPipelines;
 
-    public KodeverkPullingComponent(
+    public FintResourcePublishingComponent(
             KodeverkConfiguration kodeverkConfiguration,
             EntityPipelineFactory entityPipelineFactory,
             KafkaTemplate<String, Object> kafkaTemplate,
