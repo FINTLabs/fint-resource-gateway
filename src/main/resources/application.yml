@@ -44,23 +44,10 @@ spring:
             provider: fint-idp
             scope: fint-client
   kafka:
+    bootstrap-servers: localhost:29092
     consumer:
-      bootstrap-servers: localhost:29092
       group-id: group_id
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: "*"
-    producer:
-      bootstrap-servers: localhost:29092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 logging:
   level:
-    org:
-      apache:
-        kafka: ERROR
+    org.apache.kafka: ERROR
+    no.fintlabs.kafka.consumer.cache: WARN

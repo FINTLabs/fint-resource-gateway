@@ -10,9 +10,6 @@ import java.util.List;
 @ConfigurationProperties("fint.kodeverk")
 public class KodeverkConfiguration {
 
-    @Value(value = "${spring.kafka.producer.bootstrap-servers}")
-    private String bootstrapAddress;
-
     @Getter @Setter private Resources resources;
 
 

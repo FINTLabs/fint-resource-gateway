@@ -1,6 +1,7 @@
 package no.fintlabs.kafka.configuration;
 
-import no.fintlabs.kafka.TopicService;
+import no.fintlabs.kafka.topic.DomainContext;
+import no.fintlabs.kafka.topic.TopicService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class EntityPipelineFactory {
 
         NewTopic topic = StringUtils.isNotEmpty(configuration.getKafkaTopic())
                 ? this.topicService.createNewTopic(configuration.getKafkaTopic())
-                : this.topicService.createEntityTopic(configuration.getResourceReference());
+                : this.topicService.createEntityTopic(DomainContext.SKJEMA, configuration.getResourceReference());
 
         String fintEndpoint = StringUtils.isNotEmpty(configuration.getFintEndpoint())
                 ? configuration.getFintEndpoint()
