@@ -76,7 +76,7 @@ public class KodeverkPullingComponent {
                     .stream()
                     .map(r -> ((HashMap<String, Object>) r))
                     .collect(Collectors.toList());
-        } catch (Exception e) {
+        } catch (WebClientException e) {
             log.error("Could not pull entities from endpoint=" + endpointUrl, e);
             return Collections.emptyList();
         }

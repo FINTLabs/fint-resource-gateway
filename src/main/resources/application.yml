@@ -21,7 +21,7 @@ fint:
         - resourceReference: arkiv.kodeverk.skjermingshjemmel
         - resourceReference: arkiv.kodeverk.tilgangsrestriksjon
         - resourceReference: arkiv.kodeverk.klassifikasjonstype
-        - resourceReference: arkiv.noark.klasse
+        #- resourceReference: arkiv.noark.klasse
         - resourceReference: arkiv.kodeverk.dokumentstatus
         - resourceReference: arkiv.kodeverk.dokumenttype
         - resourceReference: arkiv.noark.arkivressurs
