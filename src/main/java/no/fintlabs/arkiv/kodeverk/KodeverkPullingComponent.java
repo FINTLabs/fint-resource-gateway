@@ -68,6 +68,7 @@ public class KodeverkPullingComponent {
             String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
             kafkaTemplate.send(entityPipeline.getKafkaTopic().name(), key, resource);
         }
+        log.info(resources.stream().count() + " entities sent to " + entityPipeline.getKafkaTopic().name());
     }
 
     private List<HashMap<String, Object>> getUpdatedResources(String endpointUrl) {

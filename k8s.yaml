@@ -59,3 +59,5 @@ spec:
             - {name: spring.kafka.consumer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
             - {name: spring.kafka.producer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
             - {name: spring.kafka.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
+            - {name: logging.level.no.fintlabs.arkiv, value: info}
+            - {name: logging.level.no.fintlabs.kafka, value: info}
