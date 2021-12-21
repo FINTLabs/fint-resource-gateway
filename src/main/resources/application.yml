@@ -5,6 +5,10 @@ fint:
     username: ''
     base-url: https://beta.felleskomponent.no
     registration-id: fint
+  kafka:
+    cache:
+      defaultCacheEntryTimeToLiveMillis: 518400000
+      defaultCacheHeapSize: 1000000
   kodeverk:
     resources:
       resend:
@@ -46,7 +50,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:29092
     consumer:
-      group-id: group_id
+      group-id: fint-resource-gateway
 logging:
   level:
     org.apache.kafka: ERROR

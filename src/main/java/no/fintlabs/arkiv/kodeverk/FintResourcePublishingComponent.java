@@ -1,5 +1,7 @@
 package no.fintlabs.arkiv.kodeverk;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import no.fintlabs.fint.FintClient;
 import no.fintlabs.kafka.configuration.EntityPipeline;
@@ -21,17 +23,20 @@ import java.util.stream.Collectors;
 @Component
 public class FintResourcePublishingComponent {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final FintClient fintClient;
+    private final ObjectMapper objectMapper;
     private final List<EntityPipeline> entityPipelines;
+
 
     public FintResourcePublishingComponent(
             KodeverkConfiguration kodeverkConfiguration,
             EntityPipelineFactory entityPipelineFactory,
-            KafkaTemplate<String, Object> kafkaTemplate,
-            FintClient fintClient) {
+            KafkaTemplate<String, String> kafkaTemplate,
+            FintClient fintClient, ObjectMapper objectMapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.fintClient = fintClient;
+        this.objectMapper = objectMapper;
         this.entityPipelines = this.createEntityPipelines(
                 entityPipelineFactory,
                 kodeverkConfiguration.getResources().getEntityPipelines()
@@ -46,7 +51,7 @@ public class FintResourcePublishingComponent {
                 .collect(Collectors.toList());
     }
 
-    @Scheduled(cron = "${fint.kafka.resourceRefreshCron}")
+    @Scheduled(cron = "${fint.kodeverk.resources.resend.cron}")
     private void resetLastUpdatedTimestamps() {
         log.warn("Resetting last updated timestamps");
         this.fintClient.resetLastUpdatedTimestamps();
@@ -64,10 +69,15 @@ public class FintResourcePublishingComponent {
     private void pullUpdatedEntityResources(EntityPipeline entityPipeline) {
         List<HashMap<String, Object>> resources = getUpdatedResources(entityPipeline.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
-            String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
-            kafkaTemplate.send(entityPipeline.getKafkaTopic().name(), key, resource);
+            try {
+                String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
+                String value = this.objectMapper.writeValueAsString(resource);
+                kafkaTemplate.send(entityPipeline.getKafkaTopic().name(), key, value);
+            } catch (JsonProcessingException e) {
+                log.error(e.getMessage(), e);
+            }
         }
-        log.info(resources.stream().count() + " entities sent to " + entityPipeline.getKafkaTopic().name());
+        log.info(resources.size() + " entities sent to " + entityPipeline.getKafkaTopic().name());
     }
 
     private List<HashMap<String, Object>> getUpdatedResources(String endpointUrl) {

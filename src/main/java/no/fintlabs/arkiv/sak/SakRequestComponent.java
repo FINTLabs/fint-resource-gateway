@@ -1,10 +1,13 @@
 package no.fintlabs.arkiv.sak;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.resource.arkiv.noark.SakResource;
 import no.fintlabs.fint.FintClient;
 import no.fintlabs.kafka.topic.DomainContext;
 import no.fintlabs.kafka.topic.TopicNameService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -15,12 +18,15 @@ import org.springframework.stereotype.Component;
 public class SakRequestComponent {
 
     private final FintClient fintClient;
+    private final ObjectMapper objectMapper;
 
-    public SakRequestComponent(FintClient fintClient) {
+    public SakRequestComponent(FintClient fintClient, ObjectMapper objectMapper) {
         this.fintClient = fintClient;
+        this.objectMapper = objectMapper;
     }
 
     @Bean
+    @Qualifier("sakRequestByMappeIdTopicName")
     String sakRequestByMappeIdTopicName(TopicNameService topicNameService) {
         return topicNameService.generateRequestTopicName(
                 DomainContext.SKJEMA,
@@ -32,13 +38,13 @@ public class SakRequestComponent {
 
     @KafkaListener(topics = "#{sakRequestByMappeIdTopicName}", containerFactory = "#{replyingKafkaListenerContainerFactory}")
     @SendTo
-    public SakResource listenMappeId(String mappeId) {
+    public String listenMappeId(String mappeId) throws JsonProcessingException {
         SakResource result = fintClient
                 .getResource("/arkiv/noark/sak/mappeid/" + mappeId, SakResource.class)
                 .block();
 
         log.info("Returning: " + result);
-        return result;
+        return objectMapper.writeValueAsString(result);
     }
 
 }
