@@ -38,7 +38,7 @@ spec:
       restartPolicy: Always
       containers:
         #- image: fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}
-        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.12_005ca14e0a23fb67d66d5cab0cf8742e8dfd699b
+        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.15_cd551b6ab3fed4dc7848de8521991501406e59d1
           name: fint-resource-gateway
           resources:
             limits:
