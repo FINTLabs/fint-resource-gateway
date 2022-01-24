@@ -28,7 +28,6 @@ public class FintResourcePublishingComponent {
     private final ObjectMapper objectMapper;
     private final List<EntityPipeline> entityPipelines;
 
-
     public FintResourcePublishingComponent(
             KodeverkConfiguration kodeverkConfiguration,
             EntityPipelineFactory entityPipelineFactory,
@@ -72,12 +71,12 @@ public class FintResourcePublishingComponent {
             try {
                 String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
                 String value = this.objectMapper.writeValueAsString(resource);
-                kafkaTemplate.send(entityPipeline.getKafkaTopic().name(), key, value);
+                kafkaTemplate.send(entityPipeline.getKafkaTopic(), key, value);
             } catch (JsonProcessingException e) {
                 log.error(e.getMessage(), e);
             }
         }
-        log.info(resources.size() + " entities sent to " + entityPipeline.getKafkaTopic().name());
+        log.info(resources.size() + " entities sent to " + entityPipeline.getKafkaTopic());
     }
 
     private List<HashMap<String, Object>> getUpdatedResources(String endpointUrl) {

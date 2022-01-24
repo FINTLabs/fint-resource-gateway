@@ -1,11 +1,14 @@
 fint:
   org-id: fintlabs.no
+  application-id: fint-resource-gateway
   client:
     password: ''
     username: ''
     base-url: https://beta.felleskomponent.no
     registration-id: fint
   kafka:
+    logging:
+      logToKafka: true
     cache:
       defaultCacheEntryTimeToLiveMillis: 518400000
       defaultCacheHeapSize: 1000000
@@ -53,5 +56,6 @@ spring:
       group-id: fint-resource-gateway
 logging:
   level:
-    org.apache.kafka: ERROR
+    root: INFO
+    org.apache.kafka: INFO
     no.fintlabs.kafka.consumer.cache: WARN

@@ -6,7 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.model.resource.arkiv.noark.SakResource;
 import no.fintlabs.fint.FintClient;
 import no.fintlabs.kafka.topic.DomainContext;
-import no.fintlabs.kafka.topic.TopicNameService;
+import no.fintlabs.kafka.topic.TopicService;
+import org.apache.kafka.clients.admin.TopicDescription;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -26,9 +27,9 @@ public class SakRequestComponent {
     }
 
     @Bean
-    @Qualifier("sakRequestByMappeIdTopicName")
-    String sakRequestByMappeIdTopicName(TopicNameService topicNameService) {
-        return topicNameService.generateRequestTopicName(
+    @Qualifier("sakRequestByMappeIdTopic")
+    TopicDescription sakRequestByMappeIdTopic(TopicService topicService) {
+        return topicService.getOrCreateRequestTopic(
                 DomainContext.SKJEMA,
                 "arkiv.noark.sak",
                 false,
@@ -36,7 +37,7 @@ public class SakRequestComponent {
         );
     }
 
-    @KafkaListener(topics = "#{sakRequestByMappeIdTopicName}", containerFactory = "#{replyingKafkaListenerContainerFactory}")
+    @KafkaListener(topics = "#{sakRequestByMappeIdTopic.name()}", containerFactory = "#{replyingKafkaListenerContainerFactory}")
     @SendTo
     public String listenMappeId(String mappeId) throws JsonProcessingException {
         SakResource result = fintClient
