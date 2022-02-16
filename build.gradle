@@ -39,7 +39,7 @@ dependencies {
     implementation 'no.fint:fint-model-resource:0.4.1'
     implementation("no.fint:fint-arkiv-resource-model-java:${apiVersion}")
     implementation("no.fint:fint-administrasjon-resource-model-java:${apiVersion}")
-    implementation("no.fintlabs:fint-kafka:0.0.2-rc-53")
+    implementation("no.fintlabs:fint-kafka:0.0.2-rc-54")
     //implementation("no.fintlabs:fint-kafka:0-SNAPSHOT")
 
     //implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
