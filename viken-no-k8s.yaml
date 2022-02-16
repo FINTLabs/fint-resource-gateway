@@ -47,6 +47,10 @@ spec:
         io.kompose.service: fint-resource-gateway
     spec:
       restartPolicy: Always
+      volumes:
+        - name: credentials
+          secret:
+            secretName: aiven-kafka-certificates
       containers:
         - image: fintlabsacr.azurecr.io/fint-resource-gateway:dummy
           name: fint-resource-gateway
