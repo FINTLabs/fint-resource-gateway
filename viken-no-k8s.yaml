@@ -1,3 +1,17 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: viken-no-fint-resource-gateway
+spec:
+  itemPath: "vaults/aks-alpha-vault/items/viken-no-fint-resource-gateway"
+---
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: aiven-kafka-certificates
+spec:
+  itemPath: "vaults/aks-alpha-vault/items/aiven-kafka-certificates"
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -17,9 +31,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    operator.1password.io/item-path: "vaults/aks-alpha-vault/items/skjema-resource-gateway"
-    operator.1password.io/item-name: "skjema-resource-gateway"
   labels:
     io.kompose.service: fint-resource-gateway
   name: fint-resource-gateway
@@ -37,9 +48,11 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        #- image: fintlabsacr.azurecr.io/fint-resource-gateway:build.${BUILD_NUMBER}_${GIT_COMMIT}
-        - image: fintlabsacr.azurecr.io/fint-resource-gateway:build.15_cd551b6ab3fed4dc7848de8521991501406e59d1
+        - image: fintlabsacr.azurecr.io/fint-resource-gateway:dummy
           name: fint-resource-gateway
+          volumeMounts:
+            - name: credentials
+              mountPath: /credentials
           resources:
             limits:
               memory: "1024Mi"
@@ -51,13 +64,9 @@ spec:
             - containerPort: 8080
           envFrom:
           - secretRef:
-              name: "skjema-resource-gateway"
+              name: "viken-no-fint-resource-gateway"
           env:
             - {name: TZ, value: Europe/Oslo}
-            #- {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc'}
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx920M'}
-            - {name: spring.kafka.consumer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
-            - {name: spring.kafka.producer.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
-            - {name: spring.kafka.bootstrap-servers, value: 'kafka-0.kafka-headless.default.svc.cluster.local:9092'}
             - {name: logging.level.no.fintlabs.arkiv, value: info}
             - {name: logging.level.no.fintlabs.kafka, value: info}
