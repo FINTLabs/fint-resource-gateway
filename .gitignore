@@ -37,3 +37,10 @@ out/
 
 ### macOS ###
 *.DS_Store
+
+ca.pem
+client.keystore.p12
+client.properties
+client.truststore.jks
+service.cert
+service.key

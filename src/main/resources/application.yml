@@ -58,5 +58,5 @@ spring:
 logging:
   level:
     root: INFO
-    org.apache.kafka: INFO
-    no.fintlabs.kafka.consumer.cache: WARN
+    org.apache.kafka: DEBUG
+    no.fintlabs.kafka.consumer.cache: DEBUG
