@@ -1,26 +1,24 @@
 package no.fintlabs.kafka.configuration;
 
-import no.fintlabs.kafka.topic.DomainContext;
-import no.fintlabs.kafka.topic.TopicService;
+
+import no.fintlabs.kafka.entity.EntityTopicNameParameters;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EntityPipelineFactory {
 
-    private final TopicService topicService;
-
-    public EntityPipelineFactory(TopicService topicService) {
-        this.topicService = topicService;
-    }
+    @Value("${fint.org-id}")
+    private String orgId;
 
     public EntityPipeline create(EntityPipelineConfiguration configuration) {
-
-        String topic = (
-                StringUtils.isNotEmpty(configuration.getKafkaTopic())
-                        ? this.topicService.getOrCreateTopic(configuration.getKafkaTopic())
-                        : this.topicService.getOrCreateEntityTopic(DomainContext.SKJEMA, configuration.getResourceReference())
-        ).name();
+        EntityTopicNameParameters topicNameParameters =
+                EntityTopicNameParameters.builder()
+                        .orgId(orgId)
+                        .domainContext("skjema")
+                        .resource(configuration.getResourceReference())
+                        .build();
 
         String fintEndpoint = StringUtils.isNotEmpty(configuration.getFintEndpoint())
                 ? configuration.getFintEndpoint()
@@ -30,6 +28,6 @@ public class EntityPipelineFactory {
                 ? configuration.getSelfLinkKeyFilter()
                 : "systemid";
 
-        return new EntityPipeline(topic, fintEndpoint, selfLinkKeyFilter);
+        return new EntityPipeline(topicNameParameters, fintEndpoint, selfLinkKeyFilter);
     }
 }

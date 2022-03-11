@@ -1,14 +1,15 @@
 package no.fintlabs.arkiv.kodeverk;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import no.fintlabs.fint.FintClient;
 import no.fintlabs.kafka.configuration.EntityPipeline;
 import no.fintlabs.kafka.configuration.EntityPipelineConfiguration;
 import no.fintlabs.kafka.configuration.EntityPipelineFactory;
 import no.fintlabs.kafka.configuration.KodeverkConfiguration;
-import org.springframework.kafka.core.KafkaTemplate;
+import no.fintlabs.kafka.entity.EntityProducer;
+import no.fintlabs.kafka.entity.EntityProducerRecord;
+import no.fintlabs.kafka.entity.EntityTopicService;
+import no.fintlabs.kafka.entity.FintKafkaEntityProducerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
@@ -23,23 +24,25 @@ import java.util.stream.Collectors;
 @Component
 public class FintResourcePublishingComponent {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final EntityTopicService entityTopicService;
+    private final EntityProducer<Object> entityProducer;
     private final FintClient fintClient;
-    private final ObjectMapper objectMapper;
     private final List<EntityPipeline> entityPipelines;
 
     public FintResourcePublishingComponent(
+            EntityTopicService entityTopicService,
             KodeverkConfiguration kodeverkConfiguration,
             EntityPipelineFactory entityPipelineFactory,
-            KafkaTemplate<String, String> kafkaTemplate,
-            FintClient fintClient, ObjectMapper objectMapper) {
-        this.kafkaTemplate = kafkaTemplate;
+            FintKafkaEntityProducerFactory fintKafkaEntityProducerFactory,
+            FintClient fintClient) {
+        this.entityTopicService = entityTopicService;
+        this.entityProducer = fintKafkaEntityProducerFactory.createProducer(Object.class);
         this.fintClient = fintClient;
-        this.objectMapper = objectMapper;
         this.entityPipelines = this.createEntityPipelines(
                 entityPipelineFactory,
                 kodeverkConfiguration.getResources().getEntityPipelines()
         );
+        this.ensureTopics();
     }
 
     private List<EntityPipeline> createEntityPipelines(
@@ -48,6 +51,15 @@ public class FintResourcePublishingComponent {
         return configs.stream()
                 .map(entityPipelineFactory::create)
                 .collect(Collectors.toList());
+    }
+
+    private void ensureTopics() {
+        entityPipelines.forEach(entityPipeline -> {
+            this.entityTopicService.ensureTopic(
+                    entityPipeline.getTopicNameParameters(),
+                    0
+            );
+        });
     }
 
     @Scheduled(cron = "${fint.kodeverk.resources.resend.cron}")
@@ -68,15 +80,16 @@ public class FintResourcePublishingComponent {
     private void pullUpdatedEntityResources(EntityPipeline entityPipeline) {
         List<HashMap<String, Object>> resources = getUpdatedResources(entityPipeline.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
-            try {
-                String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
-                String value = this.objectMapper.writeValueAsString(resource);
-                kafkaTemplate.send(entityPipeline.getKafkaTopic(), key, value);
-            } catch (JsonProcessingException e) {
-                log.error(e.getMessage(), e);
-            }
+            String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
+            entityProducer.send(
+                    EntityProducerRecord.builder()
+                            .topicNameParameters(entityPipeline.getTopicNameParameters())
+                            .key(key)
+                            .value(resource)
+                            .build()
+            );
         }
-        log.info(resources.size() + " entities sent to " + entityPipeline.getKafkaTopic());
+        log.info(resources.size() + " entities sent to " + entityPipeline.getTopicNameParameters());
     }
 
     private List<HashMap<String, Object>> getUpdatedResources(String endpointUrl) {
@@ -99,7 +112,7 @@ public class FintResourcePublishingComponent {
                 .filter(o -> o.containsKey("href"))
                 .map(o -> o.get("href"))
                 .filter(o -> o.toLowerCase().contains(selfLinkKeyFilter))
-                .findFirst()
+                .min(String::compareTo)
                 .orElseThrow(() -> new IllegalStateException(String.format("No %s to generate key for resource=%s", selfLinkKeyFilter, resource)));
     }
 
