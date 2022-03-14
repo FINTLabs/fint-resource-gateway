@@ -61,7 +61,7 @@ spec:
             - containerPort: 8080
           envFrom:
           - secretRef:
-              name: "viken-no-fint-resource-gateway"
+              name: viken-no-fint-resource-gateway
           env:
             - {name: TZ, value: Europe/Oslo}
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'}
