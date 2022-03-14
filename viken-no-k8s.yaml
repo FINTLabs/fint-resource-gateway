@@ -52,10 +52,10 @@ spec:
               mountPath: /credentials
           resources:
             limits:
-              memory: "1024Mi"
+              memory: "2048Mi"
               cpu: "1"
             requests:
-              memory: "256Mi"
+              memory: "1024Mi"
               cpu: "100m"
           ports:
             - containerPort: 8080
@@ -64,6 +64,6 @@ spec:
               name: "viken-no-fint-resource-gateway"
           env:
             - {name: TZ, value: Europe/Oslo}
-            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx920M'}
+            - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'}
             - {name: logging.level.no.fintlabs.arkiv, value: info}
             - {name: logging.level.no.fintlabs.kafka, value: info}
