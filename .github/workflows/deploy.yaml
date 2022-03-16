@@ -43,4 +43,4 @@ jobs:
             viken-no-k8s.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-          namespace: ${{ env.NAMESPACE }}
+          namespace: viken-no
