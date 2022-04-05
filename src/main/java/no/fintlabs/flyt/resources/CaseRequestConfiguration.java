@@ -1,7 +1,7 @@
-package no.fintlabs.fint.resources;
+package no.fintlabs.flyt.resources;
 
 import no.fint.model.resource.arkiv.noark.SakResource;
-import no.fintlabs.fint.FintClient;
+import no.fintlabs.flyt.FintClient;
 import no.fintlabs.kafka.TopicCleanupPolicyParameters;
 import no.fintlabs.kafka.requestreply.FintKafkaRequestConsumerFactory;
 import no.fintlabs.kafka.requestreply.RequestTopicNameParameters;

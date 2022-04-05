@@ -1,11 +1,11 @@
-package no.fintlabs.fint.resources;
+package no.fintlabs.flyt.resources;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fintlabs.fint.FintClient;
-import no.fintlabs.fint.resources.configuration.EntityPipeline;
-import no.fintlabs.fint.resources.configuration.EntityPipelineConfiguration;
-import no.fintlabs.fint.resources.configuration.EntityPipelineFactory;
-import no.fintlabs.fint.resources.configuration.ResourcesConfiguration;
+import no.fintlabs.flyt.FintClient;
+import no.fintlabs.flyt.resources.configuration.EntityPipeline;
+import no.fintlabs.flyt.resources.configuration.EntityPipelineConfiguration;
+import no.fintlabs.flyt.resources.configuration.EntityPipelineFactory;
+import no.fintlabs.flyt.resources.configuration.ResourcesConfiguration;
 import no.fintlabs.kafka.entity.EntityProducer;
 import no.fintlabs.kafka.entity.EntityProducerRecord;
 import no.fintlabs.kafka.entity.EntityTopicService;
