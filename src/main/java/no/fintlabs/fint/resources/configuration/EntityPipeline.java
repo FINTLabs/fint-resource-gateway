@@ -1,4 +1,4 @@
-package no.fintlabs.kafka.configuration;
+package no.fintlabs.fint.resources.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package no.fintlabs.kafka.configuration;
+package no.fintlabs.fint.resources.configuration;
 
 import lombok.Data;
 import org.springframework.context.annotation.Configuration;
@@ -6,10 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 public class EntityPipelineConfiguration {
-
     private String resourceReference;
     private String kafkaTopic;
     private String fintEndpoint;
     private String selfLinkKeyFilter;
-
 }

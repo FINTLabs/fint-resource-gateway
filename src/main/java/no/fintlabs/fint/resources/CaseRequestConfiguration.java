@@ -1,4 +1,4 @@
-package no.fintlabs.arkiv.sak;
+package no.fintlabs.fint.resources;
 
 import no.fint.model.resource.arkiv.noark.SakResource;
 import no.fintlabs.fint.FintClient;
@@ -13,13 +13,13 @@ import org.springframework.kafka.listener.CommonLoggingErrorHandler;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
 @Configuration
-public class SakRequestConfiguration {
+public class CaseRequestConfiguration {
 
     @Value("${fint.org-id}")
     private String orgId;
 
     @Bean
-    public ConcurrentMessageListenerContainer<String, String> sakRequestByMappeIdConsumer(
+    public ConcurrentMessageListenerContainer<String, String> caseRequestByMappeIdConsumer(
             RequestTopicService requestTopicService,
             FintClient fintClient,
             FintKafkaRequestConsumerFactory fintKafkaRequestConsumerFactory
