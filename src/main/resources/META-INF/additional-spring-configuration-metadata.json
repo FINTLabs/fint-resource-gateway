@@ -16,24 +16,29 @@
       "description": "Description for fint.client.password."
     },
     {
-      "name": "fint.kodeverk.resourcesUris",
-      "type": "java.util.List<no.fintlabs.kafka.configuration.EntityPipelineConfiguration>",
-      "description": "Description for fint.kodeverk.resources.uris."
+      "name": "fint.flyt.resource-gateway.resources.pull.initial-delay-ms",
+      "type": "java.lang.Long",
+      "description": "Description for fint.flyt.resource-gateway.resources.pull.initial-delay-ms."
     },
     {
-      "name": "fint.kodeverk.resources.resend.cron",
-      "type": "java.lang.String",
-      "description": "Description for fint.kodeverk.resources.resend.cron."
+      "name": "fint.flyt.resource-gateway.resources.pull.fixed-delay-ms",
+      "type": "java.lang.Long",
+      "description": "Description for fint.flyt.resource-gateway.resources.pull.fixed-delay-ms."
     },
     {
-      "name": "fint.kodeverk.resources.polling.initialDelay",
-      "type": "java.lang.String",
-      "description": "Description for fint.kodeverk.resources.polling.initialDelay."
+      "name": "fint.flyt.resource-gateway.resources.refresh.interval-ms",
+      "type": "java.lang.Long",
+      "description": "Description for fint.flyt.resource-gateway.resources.refresh.interval-ms."
     },
     {
-      "name": "fint.kodeverk.resources.polling.fixedDelay",
+      "name": "fint.flyt.resource-gateway.resources.refresh.topic-retention-time-offset-ms",
+      "type": "java.lang.Long",
+      "description": "Description for fint.flyt.resource-gateway.resources.refresh.topic-retention-time-offset-ms."
+    },
+    {
+      "name": "fint.kafka.application-id",
       "type": "java.lang.String",
-      "description": "Description for fint.kodeverk.resources.polling.fixedDelay."
+      "description": "Description for fint.kafka.application-id."
     }
   ]
 }

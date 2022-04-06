@@ -1,4 +1,4 @@
-package no.fintlabs.fint;
+package no.fintlabs.flyt;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;

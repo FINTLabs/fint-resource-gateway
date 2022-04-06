@@ -1,11 +1,11 @@
-package no.fintlabs.arkiv.kodeverk;
+package no.fintlabs.flyt.resources;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fintlabs.fint.FintClient;
-import no.fintlabs.kafka.configuration.EntityPipeline;
-import no.fintlabs.kafka.configuration.EntityPipelineConfiguration;
-import no.fintlabs.kafka.configuration.EntityPipelineFactory;
-import no.fintlabs.kafka.configuration.KodeverkConfiguration;
+import no.fintlabs.flyt.FintClient;
+import no.fintlabs.flyt.resources.configuration.EntityPipeline;
+import no.fintlabs.flyt.resources.configuration.EntityPipelineConfiguration;
+import no.fintlabs.flyt.resources.configuration.EntityPipelineFactory;
+import no.fintlabs.flyt.resources.configuration.ResourcesConfiguration;
 import no.fintlabs.kafka.entity.EntityProducer;
 import no.fintlabs.kafka.entity.EntityProducerRecord;
 import no.fintlabs.kafka.entity.EntityTopicService;
@@ -31,18 +31,19 @@ public class FintResourcePublishingComponent {
 
     public FintResourcePublishingComponent(
             EntityTopicService entityTopicService,
-            KodeverkConfiguration kodeverkConfiguration,
+            ResourcesConfiguration resourcesConfiguration,
             EntityPipelineFactory entityPipelineFactory,
             FintKafkaEntityProducerFactory fintKafkaEntityProducerFactory,
-            FintClient fintClient) {
+            FintClient fintClient
+    ) {
         this.entityTopicService = entityTopicService;
         this.entityProducer = fintKafkaEntityProducerFactory.createProducer(Object.class);
         this.fintClient = fintClient;
         this.entityPipelines = this.createEntityPipelines(
                 entityPipelineFactory,
-                kodeverkConfiguration.getResources().getEntityPipelines()
+                resourcesConfiguration.getEntityPipelines()
         );
-        this.ensureTopics();
+        this.ensureTopics(entityPipelines, resourcesConfiguration.getRefresh().getTopicRetentionTimeMs());
     }
 
     private List<EntityPipeline> createEntityPipelines(
@@ -53,28 +54,26 @@ public class FintResourcePublishingComponent {
                 .collect(Collectors.toList());
     }
 
-    private void ensureTopics() {
-        entityPipelines.forEach(entityPipeline -> {
-            this.entityTopicService.ensureTopic(
-                    entityPipeline.getTopicNameParameters(),
-                    0
-            );
-        });
+    private void ensureTopics(List<EntityPipeline> entityPipelines, long topicRetentionTime) {
+        entityPipelines.forEach(entityPipeline -> this.entityTopicService.ensureTopic(
+                entityPipeline.getTopicNameParameters(),
+                topicRetentionTime
+        ));
     }
 
-    @Scheduled(cron = "${fint.kodeverk.resources.resend.cron}")
+    @Scheduled(fixedRateString = "${fint.flyt.resource-gateway.resources.refresh.interval-ms}")
     private void resetLastUpdatedTimestamps() {
-        log.warn("Resetting last updated timestamps");
+        log.warn("Resetting resource last updated timestamps");
         this.fintClient.resetLastUpdatedTimestamps();
     }
 
     @Scheduled(
-            initialDelayString = "${fint.kodeverk.resources.polling.initialDelay}",
-            fixedDelayString = "${fint.kodeverk.resources.polling.fixedDelay}")
+            initialDelayString = "${fint.flyt.resource-gateway.resources.pull.initial-delay-ms}",
+            fixedDelayString = "${fint.flyt.resource-gateway.resources.pull.fixed-delay-ms}")
     private void pullAllUpdatedEntityResources() {
-        log.info("Starting polling kodeverk resources");
+        log.info("Starting pulling resources");
         entityPipelines.forEach(this::pullUpdatedEntityResources);
-        log.info("Completed polling kodeverk resources");
+        log.info("Completed pulling resources");
     }
 
     private void pullUpdatedEntityResources(EntityPipeline entityPipeline) {

@@ -7,31 +7,33 @@ fint:
     registration-id: fint
   kafka:
     application-id: fint-resource-gateway
-  kodeverk:
-    resources:
-      resend:
-        cron: 0 0 0 */6 * *
-      polling:
-        initialDelay: 5000
-        fixedDelay: 900000
-      entityPipelines:
-        - resourceReference: arkiv.noark.administrativenhet
-        - resourceReference: arkiv.noark.klassifikasjonssystem
-        - resourceReference: arkiv.kodeverk.rolle
-        - resourceReference: arkiv.kodeverk.saksstatus
-        - resourceReference: arkiv.noark.arkivdel
-        - resourceReference: arkiv.kodeverk.skjermingshjemmel
-        - resourceReference: arkiv.kodeverk.tilgangsrestriksjon
-        - resourceReference: arkiv.kodeverk.klassifikasjonstype
-        - resourceReference: arkiv.kodeverk.dokumentstatus
-        - resourceReference: arkiv.kodeverk.dokumenttype
-        - resourceReference: arkiv.kodeverk.journalstatus
-        - resourceReference: arkiv.kodeverk.variantformat
-        - resourceReference: arkiv.noark.arkivressurs
-        - resourceReference: administrasjon.personal.personalressurs
-          selfLinkKeyFilter: ansattnummer
-        - resourceReference: administrasjon.personal.person
-          selfLinkKeyFilter: fodselsnummer
+  flyt:
+    resource-gateway:
+      resources:
+        refresh:
+          interval-ms: 518400000
+          topic-retention-time-offset-ms: 86400000
+        pull:
+          initial-delay-ms: 5000
+          fixed-delay-ms: 900000
+        entity-pipelines:
+          - resource-reference: arkiv.noark.administrativenhet
+          - resource-reference: arkiv.noark.klassifikasjonssystem
+          - resource-reference: arkiv.kodeverk.rolle
+          - resource-reference: arkiv.kodeverk.saksstatus
+          - resource-reference: arkiv.noark.arkivdel
+          - resource-reference: arkiv.kodeverk.skjermingshjemmel
+          - resource-reference: arkiv.kodeverk.tilgangsrestriksjon
+          - resource-reference: arkiv.kodeverk.klassifikasjonstype
+          - resource-reference: arkiv.kodeverk.dokumentstatus
+          - resource-reference: arkiv.kodeverk.dokumenttype
+          - resource-reference: arkiv.kodeverk.journalstatus
+          - resource-reference: arkiv.kodeverk.variantformat
+          - resource-reference: arkiv.noark.arkivressurs
+          - resource-reference: administrasjon.personal.personalressurs
+            self-link-key-filter: ansattnummer
+          - resource-reference: administrasjon.personal.person
+            self-link-key-filter: fodselsnummer
 spring:
   security:
     oauth2:
