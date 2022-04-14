@@ -1,11 +1,13 @@
 fint:
-  org-id: fintlabs.no
   client:
     password: ''
     username: ''
     base-url: https://beta.felleskomponent.no
     registration-id: fint
   kafka:
+    topic:
+      org-id: fintlabs.no
+      domain-context: flyt
     application-id: fint-resource-gateway
   flyt:
     resource-gateway:

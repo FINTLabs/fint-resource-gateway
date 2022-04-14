@@ -7,9 +7,9 @@ import no.fintlabs.flyt.resources.configuration.EntityPipelineConfiguration;
 import no.fintlabs.flyt.resources.configuration.EntityPipelineFactory;
 import no.fintlabs.flyt.resources.configuration.ResourcesConfiguration;
 import no.fintlabs.kafka.entity.EntityProducer;
+import no.fintlabs.kafka.entity.EntityProducerFactory;
 import no.fintlabs.kafka.entity.EntityProducerRecord;
-import no.fintlabs.kafka.entity.EntityTopicService;
-import no.fintlabs.kafka.entity.FintKafkaEntityProducerFactory;
+import no.fintlabs.kafka.entity.topic.EntityTopicService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
@@ -33,11 +33,11 @@ public class FintResourcePublishingComponent {
             EntityTopicService entityTopicService,
             ResourcesConfiguration resourcesConfiguration,
             EntityPipelineFactory entityPipelineFactory,
-            FintKafkaEntityProducerFactory fintKafkaEntityProducerFactory,
+            EntityProducerFactory entityProducerFactory,
             FintClient fintClient
     ) {
         this.entityTopicService = entityTopicService;
-        this.entityProducer = fintKafkaEntityProducerFactory.createProducer(Object.class);
+        this.entityProducer = entityProducerFactory.createProducer(Object.class);
         this.fintClient = fintClient;
         this.entityPipelines = this.createEntityPipelines(
                 entityPipelineFactory,

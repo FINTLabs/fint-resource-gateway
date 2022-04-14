@@ -1,22 +1,16 @@
 package no.fintlabs.flyt.resources.configuration;
 
 
-import no.fintlabs.kafka.entity.EntityTopicNameParameters;
+import no.fintlabs.kafka.entity.topic.EntityTopicNameParameters;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EntityPipelineFactory {
 
-    @Value("${fint.org-id}")
-    private String orgId;
-
     public EntityPipeline create(EntityPipelineConfiguration configuration) {
         EntityTopicNameParameters topicNameParameters =
                 EntityTopicNameParameters.builder()
-                        .orgId(orgId)
-                        .domainContext("skjema")
                         .resource(configuration.getResourceReference())
                         .build();
 
@@ -30,4 +24,5 @@ public class EntityPipelineFactory {
 
         return new EntityPipeline(topicNameParameters, fintEndpoint, selfLinkKeyFilter);
     }
+
 }
