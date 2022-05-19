@@ -3,6 +3,7 @@ package no.fintlabs;
 import io.netty.channel.ChannelOption;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Getter
@@ -41,6 +43,7 @@ public class OAuthConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "fint.flyt.resource-gateway.authorization.enable", havingValue = "true")
     public OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository clientRegistrationRepository,
                                                                  OAuth2AuthorizedClientService authorizedClientService) {
 
@@ -82,21 +85,24 @@ public class OAuthConfiguration {
     }
 
     @Bean
-    public WebClient webClient(WebClient.Builder builder, OAuth2AuthorizedClientManager authorizedClientManager, ClientHttpConnector clientHttpConnector) {
+    public WebClient webClient(WebClient.Builder builder, Optional<OAuth2AuthorizedClientManager> authorizedClientManager, ClientHttpConnector clientHttpConnector) {
         ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
                 .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1))
                 .build();
 
-        ServletOAuth2AuthorizedClientExchangeFilterFunction authorizedClientExchangeFilterFunction =
-                new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
-        authorizedClientExchangeFilterFunction.setDefaultClientRegistrationId(registrationId);
+        authorizedClientManager.ifPresent(presentAuthorizedClientManager -> {
+            ServletOAuth2AuthorizedClientExchangeFilterFunction authorizedClientExchangeFilterFunction =
+                    new ServletOAuth2AuthorizedClientExchangeFilterFunction(presentAuthorizedClientManager);
+            authorizedClientExchangeFilterFunction.setDefaultClientRegistrationId(registrationId);
+            builder.filter(authorizedClientExchangeFilterFunction);
+        });
 
         return builder
                 .clientConnector(clientHttpConnector)
                 .exchangeStrategies(exchangeStrategies)
-                .filter(authorizedClientExchangeFilterFunction)
                 .baseUrl(baseUrl)
                 .build();
     }
+
 }
 

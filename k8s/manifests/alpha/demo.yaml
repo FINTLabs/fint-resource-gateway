@@ -73,6 +73,7 @@ spec:
             - {name: TZ, value: Europe/Oslo}
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'}
             - {name: fint.client.base-url, value: 'https://play-with-fint.felleskomponent.no'}
-            - {name: fint.kafka.topic.org-id, value: 'pwf.no' }
+            - {name: fint.kafka.topic.org-id, value: 'pwf.no'}
+            - {name: fint.flyt.resource-gateway.authorization.enable, value: false}
             - {name: logging.level.no.fintlabs.arkiv, value: info}
             - {name: logging.level.no.fintlabs.kafka, value: info}

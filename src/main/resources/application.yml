@@ -11,6 +11,8 @@ fint:
     application-id: fint-resource-gateway
   flyt:
     resource-gateway:
+      authorization:
+        enable: true
       resources:
         refresh:
           interval-ms: 518400000
