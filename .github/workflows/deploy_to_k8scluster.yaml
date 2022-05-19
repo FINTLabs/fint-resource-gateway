@@ -46,7 +46,7 @@ jobs:
            k8s/manifests/alpha/demo.yaml
          images: |
            ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
-         annotate-namespace: false
+         namespace: demo
 ## Beta cluster ##
 #      - name: Set the target Beta cluster.
 #        uses: azure/aks-set-context@v1
