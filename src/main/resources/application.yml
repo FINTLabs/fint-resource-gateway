@@ -48,7 +48,7 @@ spring:
         registration:
           fint:
             authorization-grant-type: password
-            client-id:
+            client-id: placeholder
             client-secret:
             provider: fint-idp
             scope: fint-client
