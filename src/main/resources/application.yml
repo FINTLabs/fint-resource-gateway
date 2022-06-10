@@ -1,4 +1,5 @@
 fint:
+  org-id: fintlabs.no
   client:
     password: ''
     username: ''
@@ -6,7 +7,7 @@ fint:
     registration-id: fint
   kafka:
     topic:
-      org-id: fintlabs.no
+      org-id: ${fint.org-id}
       domain-context: flyt
     application-id: fint-resource-gateway
   flyt:
