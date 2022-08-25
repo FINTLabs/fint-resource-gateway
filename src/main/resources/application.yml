@@ -25,6 +25,7 @@ fint:
           - resource-reference: arkiv.noark.klassifikasjonssystem
           - resource-reference: arkiv.kodeverk.rolle
           - resource-reference: arkiv.kodeverk.saksstatus
+          - resource-reference: arkiv.kodeverk.saksmappetype
           - resource-reference: arkiv.noark.arkivdel
           - resource-reference: arkiv.kodeverk.skjermingshjemmel
           - resource-reference: arkiv.kodeverk.tilgangsrestriksjon
