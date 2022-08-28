@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.75.Final:osx-aarch_64'
 
     //implementation 'org.springframework.boot:spring-boot-starter-security'
     //implementation 'org.springframework.security:spring-security-oauth2-resource-server'
