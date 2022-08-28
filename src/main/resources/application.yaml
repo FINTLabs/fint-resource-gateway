@@ -1,19 +1,7 @@
 fint:
-  org-id: fintlabs.no
-  client:
-    password: ''
-    username: ''
-    base-url: https://beta.felleskomponent.no
-    registration-id: fint
-  kafka:
-    topic:
-      org-id: ${fint.org-id}
-      domain-context: flyt
-    application-id: fint-resource-gateway
+  application-id: fint-resource-gateway
   flyt:
     resource-gateway:
-      authorization:
-        enable: true
       resources:
         refresh:
           interval-ms: 518400000
@@ -39,25 +27,13 @@ fint:
             self-link-key-filter: ansattnummer
           - resource-reference: administrasjon.personal.person
             self-link-key-filter: fodselsnummer
-spring:
-  security:
-    oauth2:
-      client:
-        provider:
-          fint-idp:
-            token-uri: https://idp.felleskomponent.no/nidp/oauth/nam/token
-        registration:
-          fint:
-            authorization-grant-type: password
-            client-id: placeholder
-            client-secret:
-            provider: fint-idp
-            scope: fint-client
-  kafka:
-    bootstrap-servers: localhost:29092
-    consumer:
-      group-id: fint-resource-gateway
 logging:
   level:
     root: INFO
     org.apache.kafka: INFO
+spring:
+  profiles:
+    include:
+      - flyt-kafka
+      - flyt-logging
+      - flyt-fint-client
