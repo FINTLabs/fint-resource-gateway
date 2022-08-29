@@ -1,15 +1,13 @@
 apiVersion: onepassword.com/v1
 kind: OnePasswordItem
 metadata:
-  namespace: demo
-  name: demo-fint-resource-gateway
+  name: aiven-kafka
 spec:
-  itemPath: "vaults/aks-alpha-vault/items/demo-fint-resource-gateway"
+  itemPath: "vaults/aks-pwf-vault/items/aiven-kafka"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: demo
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   labels:
@@ -26,7 +24,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: demo
   labels:
     io.kompose.service: fint-resource-gateway
   name: fint-resource-gateway
@@ -68,12 +65,13 @@ spec:
             - containerPort: 8080
           envFrom:
             - secretRef:
-                name: demo-fint-resource-gateway
+                name: aiven-kafka
           env:
             - {name: TZ, value: Europe/Oslo}
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'}
+            - {name: fint.org-id, value: 'pwf.no'}
             - {name: fint.client.base-url, value: 'https://play-with-fint.felleskomponent.no'}
-            - {name: fint.kafka.topic.org-id, value: 'pwf.no'}
             - {name: fint.flyt.resource-gateway.authorization.enable, value: "false"}
+            - {name: spring.security.oauth2.client.registration.fint.client-id, value: 'dummy'}
             - {name: logging.level.no.fintlabs.arkiv, value: info}
             - {name: logging.level.no.fintlabs.kafka, value: info}

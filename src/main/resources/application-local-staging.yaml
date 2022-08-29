@@ -1,0 +1,15 @@
+fint:
+  org-id: fintlabs.no
+  flyt:
+    resource-gateway:
+      authorization:
+        enable: true
+  client:
+    base-url: https://beta.felleskomponent.no
+  kafka:
+    default-replicas: 1
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+server:
+  port: 8087
