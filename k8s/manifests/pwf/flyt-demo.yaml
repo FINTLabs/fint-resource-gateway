@@ -72,5 +72,6 @@ spec:
             - {name: fint.org-id, value: 'pwf.no'}
             - {name: fint.client.base-url, value: 'https://play-with-fint.felleskomponent.no'}
             - {name: fint.flyt.resource-gateway.authorization.enable, value: "false"}
+            - {name: spring.security.oauth2.client.registration.fint.client-id, value: 'dummy'}
             - {name: logging.level.no.fintlabs.arkiv, value: info}
             - {name: logging.level.no.fintlabs.kafka, value: info}
