@@ -20,6 +20,7 @@ fint:
           - resource-reference: arkiv.kodeverk.klassifikasjonstype
           - resource-reference: arkiv.kodeverk.dokumentstatus
           - resource-reference: arkiv.kodeverk.dokumenttype
+          - resource-reference: arkiv.kodeverk.journalposttype
           - resource-reference: arkiv.kodeverk.journalstatus
           - resource-reference: arkiv.kodeverk.variantformat
           - resource-reference: arkiv.noark.arkivressurs
