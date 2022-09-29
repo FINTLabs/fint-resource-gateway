@@ -37,7 +37,7 @@ jobs:
           cluster-name: ${{ env.PWF_CLUSTER_NAME }}
           resource-group: ${{ env.PWF_CLUSTER_RESOURCE_GROUP }}
 
-      - name: Deploy to PWF
+      - name: Deploy to PWF - Flyt
         uses: azure/k8s-deploy@v3.0
         with:
           manifests: |
@@ -45,6 +45,15 @@ jobs:
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
           namespace: flyt-demo
+
+      - name: Deploy to PWF - Ressurs
+        uses: azure/k8s-deploy@v3.0
+        with:
+          manifests: |
+            k8s/manifests/pwf/ressurs-demo.yaml
+          images: |
+            ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
+          namespace: ressurs-demo
 
 ## Alpha cluster ##
       - name: Set the target Alpha cluster.
@@ -58,7 +67,8 @@ jobs:
         uses: azure/k8s-deploy@v3.0
         with:
           manifests: |
-            k8s/manifests/alpha/viken-no.yaml
+            - k8s/manifests/alpha/viken-no-flyt.yaml
+            - k8s/manifests/alpha/viken-no-ressurs.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
           namespace: viken-no
