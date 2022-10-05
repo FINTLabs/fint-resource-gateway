@@ -16,24 +16,24 @@
       "description": "Description for fint.client.password."
     },
     {
-      "name": "fint.resource-gateway.resources.pull.initial-delay-ms",
+      "name": "fint.resource-gateway.resources.entity.pull.initial-delay-ms",
       "type": "java.lang.Long",
-      "description": "Description for fint.resource-gateway.resources.pull.initial-delay-ms."
+      "description": "Description for fint.resource-gateway.resources.entity.pull.initial-delay-ms."
     },
     {
-      "name": "fint.resource-gateway.resources.pull.fixed-delay-ms",
+      "name": "fint.resource-gateway.resources.entity.pull.fixed-delay-ms",
       "type": "java.lang.Long",
-      "description": "Description for fint.resource-gateway.resources.pull.fixed-delay-ms."
+      "description": "Description for fint.resource-gateway.resources.entity.pull.fixed-delay-ms."
     },
     {
-      "name": "fint.resource-gateway.resources.refresh.interval-ms",
+      "name": "fint.resource-gateway.resources.entity.refresh.interval-ms",
       "type": "java.lang.Long",
-      "description": "Description for fint.resource-gateway.resources.refresh.interval-ms."
+      "description": "Description for fint.resource-gateway.resources.entity.refresh.interval-ms."
     },
     {
-      "name": "fint.resource-gateway.resources.refresh.topic-retention-time-offset-ms",
+      "name": "fint.resource-gateway.resources.entity.refresh.topic-retention-time-offset-ms",
       "type": "java.lang.Long",
-      "description": "Description for fint.resource-gateway.resources.refresh.topic-retention-time-offset-ms."
+      "description": "Description for fint.resource-gateway.resources.entity.refresh.topic-retention-time-offset-ms."
     },
     {
       "name": "fint.kafka.application-id",

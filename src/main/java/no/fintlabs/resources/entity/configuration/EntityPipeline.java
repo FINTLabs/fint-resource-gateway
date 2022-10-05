@@ -1,17 +1,15 @@
-package no.fintlabs.resources.configuration;
+package no.fintlabs.resources.entity.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import no.fintlabs.kafka.entity.topic.EntityTopicNameParameters;
 
+@Getter
 @AllArgsConstructor
 public class EntityPipeline {
 
-    @Getter
     private EntityTopicNameParameters topicNameParameters;
-    @Getter
     private String fintEndpoint;
-    @Getter
     private String selfLinkKeyFilter;
 
 }

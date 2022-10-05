@@ -1,11 +1,7 @@
-package no.fintlabs.resources;
+package no.fintlabs.resources.entity;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fintlabs.FintClient;
-import no.fintlabs.resources.configuration.EntityPipeline;
-import no.fintlabs.resources.configuration.EntityPipelineConfiguration;
-import no.fintlabs.resources.configuration.EntityPipelineFactory;
-import no.fintlabs.resources.configuration.ResourcesConfiguration;
 import no.fintlabs.kafka.entity.EntityProducer;
 import no.fintlabs.kafka.entity.EntityProducerFactory;
 import no.fintlabs.kafka.entity.EntityProducerRecord;
@@ -13,6 +9,7 @@ import no.fintlabs.kafka.entity.topic.EntityTopicService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
+import no.fintlabs.resources.entity.configuration.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,7 +28,7 @@ public class FintResourcePublishingComponent {
 
     public FintResourcePublishingComponent(
             EntityTopicService entityTopicService,
-            ResourcesConfiguration resourcesConfiguration,
+            EntityResourcesConfiguration entityResourcesConfiguration,
             EntityPipelineFactory entityPipelineFactory,
             EntityProducerFactory entityProducerFactory,
             FintClient fintClient
@@ -41,9 +38,9 @@ public class FintResourcePublishingComponent {
         this.fintClient = fintClient;
         this.entityPipelines = this.createEntityPipelines(
                 entityPipelineFactory,
-                resourcesConfiguration.getEntityPipelines()
+                entityResourcesConfiguration.getEntityPipelines()
         );
-        this.ensureTopics(entityPipelines, resourcesConfiguration.getRefresh().getTopicRetentionTimeMs());
+        this.ensureTopics(entityPipelines, entityResourcesConfiguration.getRefresh().getTopicRetentionTimeMs());
     }
 
     private List<EntityPipeline> createEntityPipelines(
@@ -61,15 +58,15 @@ public class FintResourcePublishingComponent {
         ));
     }
 
-    @Scheduled(fixedRateString = "${fint.resource-gateway.resources.refresh.interval-ms}")
+    @Scheduled(fixedRateString = "${fint.resource-gateway.resources.entity.refresh.interval-ms}")
     private void resetLastUpdatedTimestamps() {
         log.warn("Resetting resource last updated timestamps");
         this.fintClient.resetLastUpdatedTimestamps();
     }
 
     @Scheduled(
-            initialDelayString = "${fint.resource-gateway.resources.pull.initial-delay-ms}",
-            fixedDelayString = "${fint.resource-gateway.resources.pull.fixed-delay-ms}")
+            initialDelayString = "${fint.resource-gateway.resources.entity.pull.initial-delay-ms}",
+            fixedDelayString = "${fint.resource-gateway.resources.entity.pull.fixed-delay-ms}")
     private void pullAllUpdatedEntityResources() {
         log.info("Starting pulling resources");
         entityPipelines.forEach(this::pullUpdatedEntityResources);
