@@ -1,4 +1,4 @@
-package no.fintlabs.flyt;
+package no.fintlabs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -1,9 +1,8 @@
 fint:
   org-id: fintlabs.no
-  flyt:
-    resource-gateway:
-      authorization:
-        enable: true
+  resource-gateway:
+    authorization:
+      enable: true
   client:
     base-url: https://beta.felleskomponent.no
   kafka:

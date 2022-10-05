@@ -1,4 +1,4 @@
-package no.fintlabs.flyt.resources.configuration;
+package no.fintlabs.resources.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

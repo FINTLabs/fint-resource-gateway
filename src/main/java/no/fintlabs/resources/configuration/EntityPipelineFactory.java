@@ -1,4 +1,4 @@
-package no.fintlabs.flyt.resources.configuration;
+package no.fintlabs.resources.configuration;
 
 
 import no.fintlabs.kafka.entity.topic.EntityTopicNameParameters;

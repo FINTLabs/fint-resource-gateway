@@ -71,15 +71,15 @@ spec:
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'}
             - {name: fint.org-id, value: 'pwf.no'}
             - {name: fint.client.base-url, value: 'https://play-with-fint.felleskomponent.no'}
-            - {name: fint.flyt.resource-gateway.authorization.enable, value: "false"}
+            - {name: fint.resource-gateway.authorization.enable, value: "false"}
             - {name: spring.security.oauth2.client.registration.fint.client-id, value: 'dummy'}
             - {name: logging.level.no.fintlabs.arkiv, value: info}
             - {name: logging.level.no.fintlabs.kafka, value: info}
-            - {name: fint.flyt.resource-gateway.resources.refresh.interval-ms, value: 518400000}
-            - {name: fint.flyt.resource-gateway.resources.refresh.topic-retention-time-offset-ms, value: 86400000}
-            - {name: fint.flyt.resource-gateway.resources.pull.initial-delay-ms, value: 5000}
-            - {name: fint.flyt.resource-gateway.resources.pull.fixed-delay-ms, value: 900000}
-            - name: fint.flyt.resource-gateway.resources.entity-pipelines
+            - {name: fint.resource-gateway.resources.refresh.interval-ms, value: 518400000}
+            - {name: fint.resource-gateway.resources.refresh.topic-retention-time-offset-ms, value: 86400000}
+            - {name: fint.resource-gateway.resources.pull.initial-delay-ms, value: 5000}
+            - {name: fint.resource-gateway.resources.pull.fixed-delay-ms, value: 900000}
+            - name: fint.resource-gateway.resources.entity-pipelines
               value: [
                 - resource-reference: administrasjon.personal.personalressurs
                   self-link-key-filter: ansattnummer

@@ -1,11 +1,11 @@
-package no.fintlabs.flyt.resources;
+package no.fintlabs.resources;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fintlabs.flyt.FintClient;
-import no.fintlabs.flyt.resources.configuration.EntityPipeline;
-import no.fintlabs.flyt.resources.configuration.EntityPipelineConfiguration;
-import no.fintlabs.flyt.resources.configuration.EntityPipelineFactory;
-import no.fintlabs.flyt.resources.configuration.ResourcesConfiguration;
+import no.fintlabs.FintClient;
+import no.fintlabs.resources.configuration.EntityPipeline;
+import no.fintlabs.resources.configuration.EntityPipelineConfiguration;
+import no.fintlabs.resources.configuration.EntityPipelineFactory;
+import no.fintlabs.resources.configuration.ResourcesConfiguration;
 import no.fintlabs.kafka.entity.EntityProducer;
 import no.fintlabs.kafka.entity.EntityProducerFactory;
 import no.fintlabs.kafka.entity.EntityProducerRecord;
@@ -61,15 +61,15 @@ public class FintResourcePublishingComponent {
         ));
     }
 
-    @Scheduled(fixedRateString = "${fint.flyt.resource-gateway.resources.refresh.interval-ms}")
+    @Scheduled(fixedRateString = "${fint.resource-gateway.resources.refresh.interval-ms}")
     private void resetLastUpdatedTimestamps() {
         log.warn("Resetting resource last updated timestamps");
         this.fintClient.resetLastUpdatedTimestamps();
     }
 
     @Scheduled(
-            initialDelayString = "${fint.flyt.resource-gateway.resources.pull.initial-delay-ms}",
-            fixedDelayString = "${fint.flyt.resource-gateway.resources.pull.fixed-delay-ms}")
+            initialDelayString = "${fint.resource-gateway.resources.pull.initial-delay-ms}",
+            fixedDelayString = "${fint.resource-gateway.resources.pull.fixed-delay-ms}")
     private void pullAllUpdatedEntityResources() {
         log.info("Starting pulling resources");
         entityPipelines.forEach(this::pullUpdatedEntityResources);

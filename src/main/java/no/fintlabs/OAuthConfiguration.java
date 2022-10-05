@@ -43,7 +43,7 @@ public class OAuthConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "fint.flyt.resource-gateway.authorization.enable", havingValue = "true")
+    @ConditionalOnProperty(name = "fint.resource-gateway.authorization.enable", havingValue = "true")
     public OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository clientRegistrationRepository,
                                                                  OAuth2AuthorizedClientService authorizedClientService) {
 
