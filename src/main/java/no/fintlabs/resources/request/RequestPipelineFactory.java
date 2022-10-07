@@ -1,6 +1,7 @@
-package no.fintlabs.resources.request.configuration;
+package no.fintlabs.resources.request;
 
 import no.fintlabs.kafka.requestreply.topic.RequestTopicNameParameters;
+import no.fintlabs.resources.request.properties.RequestPipelineConfiguration;
 import org.springframework.stereotype.Service;
 
 @Service

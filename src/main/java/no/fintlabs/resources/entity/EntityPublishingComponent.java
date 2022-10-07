@@ -6,10 +6,12 @@ import no.fintlabs.kafka.entity.EntityProducer;
 import no.fintlabs.kafka.entity.EntityProducerFactory;
 import no.fintlabs.kafka.entity.EntityProducerRecord;
 import no.fintlabs.kafka.entity.topic.EntityTopicService;
+import no.fintlabs.resources.entity.properties.EntityConfiguration;
+import no.fintlabs.resources.entity.properties.EntityPipelineConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
-import no.fintlabs.resources.entity.configuration.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,16 +21,17 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class FintResourcePublishingComponent {
+@ConditionalOnProperty("fint.resource-gateway.resources.entity.enabled")
+public class EntityPublishingComponent {
 
     private final EntityTopicService entityTopicService;
     private final EntityProducer<Object> entityProducer;
     private final FintClient fintClient;
     private final List<EntityPipeline> entityPipelines;
 
-    public FintResourcePublishingComponent(
+    public EntityPublishingComponent(
             EntityTopicService entityTopicService,
-            EntityResourcesConfiguration entityResourcesConfiguration,
+            EntityConfiguration entityConfiguration,
             EntityPipelineFactory entityPipelineFactory,
             EntityProducerFactory entityProducerFactory,
             FintClient fintClient
@@ -38,9 +41,9 @@ public class FintResourcePublishingComponent {
         this.fintClient = fintClient;
         this.entityPipelines = this.createEntityPipelines(
                 entityPipelineFactory,
-                entityResourcesConfiguration.getEntityPipelines()
+                entityConfiguration.getEntityPipelines()
         );
-        this.ensureTopics(entityPipelines, entityResourcesConfiguration.getRefresh().getTopicRetentionTimeMs());
+        this.ensureTopics(entityPipelines, entityConfiguration.getRefresh().getTopicRetentionTimeMs());
     }
 
     private List<EntityPipeline> createEntityPipelines(
@@ -58,15 +61,15 @@ public class FintResourcePublishingComponent {
         ));
     }
 
-    @Scheduled(fixedRateString = "${fint.resource-gateway.resources.entity.refresh.interval-ms}")
+    @Scheduled(fixedRateString = "#{entityConfiguration.refresh.intervalMs}")
     private void resetLastUpdatedTimestamps() {
         log.warn("Resetting resource last updated timestamps");
         this.fintClient.resetLastUpdatedTimestamps();
     }
 
     @Scheduled(
-            initialDelayString = "${fint.resource-gateway.resources.entity.pull.initial-delay-ms}",
-            fixedDelayString = "${fint.resource-gateway.resources.entity.pull.fixed-delay-ms}")
+            initialDelayString = "#{entityConfiguration.pull.initialDelayMs}",
+            fixedDelayString = "#{entityConfiguration.pull.fixedDelayMs}")
     private void pullAllUpdatedEntityResources() {
         log.info("Starting pulling resources");
         entityPipelines.forEach(this::pullUpdatedEntityResources);

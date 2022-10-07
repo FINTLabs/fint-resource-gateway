@@ -1,10 +1,8 @@
-package no.fintlabs.resources.entity.configuration;
+package no.fintlabs.resources.entity.properties;
 
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
 
 @Data
-@Configuration
 public class EntityPipelineConfiguration {
     private String resourceReference;
     private String kafkaTopic;

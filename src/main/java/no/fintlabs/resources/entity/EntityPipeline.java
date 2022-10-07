@@ -1,4 +1,4 @@
-package no.fintlabs.resources.entity.configuration;
+package no.fintlabs.resources.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

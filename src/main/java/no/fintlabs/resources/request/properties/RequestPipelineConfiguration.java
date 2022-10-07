@@ -1,4 +1,4 @@
-package no.fintlabs.resources.request.configuration;
+package no.fintlabs.resources.request.properties;
 
 import lombok.Data;
 import org.springframework.context.annotation.Configuration;

@@ -2,6 +2,7 @@ fint:
   resource-gateway:
     resources:
       entity:
+        enabled: true
         refresh:
           interval-ms: 518400000
           topic-retention-time-offset-ms: 86400000

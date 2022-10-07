@@ -6,23 +6,22 @@ import no.fintlabs.kafka.common.topic.TopicCleanupPolicyParameters;
 import no.fintlabs.kafka.requestreply.ReplyProducerRecord;
 import no.fintlabs.kafka.requestreply.RequestConsumerFactoryService;
 import no.fintlabs.kafka.requestreply.topic.RequestTopicService;
-import no.fintlabs.resources.request.configuration.RequestPipeline;
-import no.fintlabs.resources.request.configuration.RequestPipelineFactory;
-import no.fintlabs.resources.request.configuration.RequestResourcesConfiguration;
-import org.springframework.context.annotation.Bean;
+import no.fintlabs.resources.request.properties.RequestConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.listener.CommonLoggingErrorHandler;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
 @Configuration
-public class RequestConfiguration {
+@ConditionalOnProperty("fint.resource-gateway.resources.request.enabled")
+public class RequestConsumerConfiguration {
 
-    public RequestConfiguration(
+    public RequestConsumerConfiguration(
             RequestTopicService requestTopicService,
             FintClient fintClient,
             RequestConsumerFactoryService requestConsumerFactoryService,
             RequestPipelineFactory requestPipelineFactory,
-            RequestResourcesConfiguration requestResourcesConfiguration,
+            RequestConfiguration requestConfiguration,
             ListenerBeanRegistrationService listenerBeanRegistrationService
     ) {
         createRequestConsumers(
@@ -30,7 +29,7 @@ public class RequestConfiguration {
                 fintClient,
                 requestConsumerFactoryService,
                 requestPipelineFactory,
-                requestResourcesConfiguration,
+                requestConfiguration,
                 listenerBeanRegistrationService
         );
     }
@@ -40,10 +39,10 @@ public class RequestConfiguration {
             FintClient fintClient,
             RequestConsumerFactoryService requestConsumerFactoryService,
             RequestPipelineFactory requestPipelineFactory,
-            RequestResourcesConfiguration requestResourcesConfiguration,
+            RequestConfiguration requestConfiguration,
             ListenerBeanRegistrationService listenerBeanRegistrationService
     ) {
-        requestResourcesConfiguration.getRequestPipelines()
+        requestConfiguration.getRequestPipelines()
                 .stream()
                 .map(requestPipelineFactory::create)
                 .map(requestPipeline -> createResourceRequestConsumer(

@@ -1,7 +1,8 @@
-package no.fintlabs.resources.entity.configuration;
+package no.fintlabs.resources.entity;
 
 
 import no.fintlabs.kafka.entity.topic.EntityTopicNameParameters;
+import no.fintlabs.resources.entity.properties.EntityPipelineConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
