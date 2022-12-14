@@ -7,7 +7,7 @@ patchesStrategicMerge:
   - config-map.yaml
 commonLabels:
   app.kubernetes.io/name: fint-resource-gateway
-  app.kubernetes.io/instance: fint-flyt-data-service_viken-test
+  app.kubernetes.io/instance: fint-resource-gateway_viken-test
   app.kubernetes.io/version: latest
   app.kubernetes.io/component: backend
   app.kubernetes.io/part-of: fint-flyt
