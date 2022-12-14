@@ -4,9 +4,9 @@ metadata:
   name: fint-resource-gateway
 data:
   TZ: 'Europe/Oslo'
-  JAVA_TOOL_OPTIONS: '-XX:+ExitOnOutOfMemoryError -Xmx3G'
-  logging.level.no.fintlabs.arkiv: 'info'
+  JAVA_TOOL_OPTIONS: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'
   fint.org-id: 'viken.test'
-  fint.flyt.resource-server.security.api.internal.enabled: 'true'
-  fint.flyt.resource-server.security.api.internal.authorized-org-ids: 'viken.test, vigo.no'
-  spring.webflux.base-path: 'alpha/viken-test'
+  fint.client.base-url: 'https://beta.felleskomponent.no'
+  fint.flyt.resource-gateway.authorization.enable: 'true'
+  logging.level.no.fintlabs.arkiv: 'info'
+  logging.level.no.fintlabs.kafka: 'info'
