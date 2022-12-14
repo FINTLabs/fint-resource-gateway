@@ -4,7 +4,7 @@ metadata:
   name: fint-resource-gateway
 data:
   TZ: 'Europe/Oslo'
-  JAVA_TOOL_OPTIONS: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'
+  JAVA_TOOL_OPTIONS: '-XX:+ExitOnOutOfMemoryError -Xmx3G'
   logging.level.no.fintlabs.arkiv: 'info'
   fint.org-id: 'viken.test'
   fint.flyt.resource-server.security.api.internal.enabled: 'true'
