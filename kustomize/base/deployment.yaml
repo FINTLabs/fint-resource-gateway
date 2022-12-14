@@ -3,7 +3,7 @@ kind: OnePasswordItem
 metadata:
   name: viken-test-fint-resource-gateway
 spec:
-  itemPath: "vaults/aks-alpha-vault/items/viken-test-fint-resource-gateway"
+  itemPath: "vaults/aks-alpha-vault/items/viken-test-flyt-fint-resource-gateway"
 ---
 apiVersion: apps/v1
 kind: Deployment
