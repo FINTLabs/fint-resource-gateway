@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fint-resource-gateway
+data:
+  TZ: 'Europe/Oslo'
+  JAVA_TOOL_OPTIONS: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'
+  logging.level.no.fintlabs.arkiv: 'info'
+  fint.org-id: 'vlfk.no'
+  fint.flyt.resource-server.security.api.internal.enabled: 'true'
+  fint.flyt.resource-server.security.api.internal.authorized-org-ids: 'vlfk.no, vigo.no'
+  spring.webflux.base-path: 'alpha/vlfk-no'
