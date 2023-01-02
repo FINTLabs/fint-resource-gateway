@@ -1,7 +1,7 @@
 apiVersion: onepassword.com/v1
 kind: OnePasswordItem
 metadata:
-  name: viken-no-fint-resource-gateway
+  name: vlfk-no-fint-resource-gateway
 spec:
   itemPath: "vaults/aks-alpha-vault/items/vlfk-no-flyt-fint-resource-gateway"
 ---
