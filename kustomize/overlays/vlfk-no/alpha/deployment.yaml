@@ -39,6 +39,6 @@ spec:
             - secretRef:
                 name: fint-resource-gateway-kafka
             - secretRef:
-                name: viken-no-fint-resource-gateway
+                name: vlfk-no-fint-resource-gateway
             - configMapRef:
                 name: fint-resource-gateway
