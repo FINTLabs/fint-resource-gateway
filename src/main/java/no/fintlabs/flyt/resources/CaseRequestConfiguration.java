@@ -35,7 +35,8 @@ public class CaseRequestConfiguration {
                         .value(
                                 fintClient
                                         .getResource("/arkiv/noark/sak/mappeid/" + consumerRecord.value(), SakResource.class)
-                                        .block()
+                                        .blockOptional()
+                                        .orElse(null)
                         ).build(),
                 new CommonLoggingErrorHandler()
         ).createContainer(topicNameParameters);
