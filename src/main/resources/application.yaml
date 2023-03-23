@@ -13,6 +13,8 @@ fint:
           - resource-reference: arkiv.noark.administrativenhet
           - resource-reference: arkiv.noark.klassifikasjonssystem
           - resource-reference: arkiv.kodeverk.rolle
+          - resource-reference: arkiv.kodeverk.partrolle
+          - resource-reference: arkiv.kodeverk.korrespondanseparttype
           - resource-reference: arkiv.kodeverk.saksstatus
           - resource-reference: arkiv.noark.arkivdel
           - resource-reference: arkiv.kodeverk.skjermingshjemmel
