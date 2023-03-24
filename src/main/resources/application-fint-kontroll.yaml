@@ -14,9 +14,15 @@ fint:
             self-link-key-filter: ansattnummer
           - resource-reference: administrasjon.personal.person
             self-link-key-filter: fodselsnummer
-  #          - resource-reference: utdanning.elev.person
-  #            self-link-key-filter: fodselsnummer
-  #          - resource-reference: utdanning.elev.elev
+          - resourceReference: administrasjon.personal.arbeidsforhold
+          - resourceReference: administrasjon.organisasjon.organisasjonselement
+            self-link-key-filter: organisasjonsid
+          - resource-reference: utdanning.elev.person
+            self-link-key-filter: fodselsnummer
+          - resource-reference: utdanning.elev.elev
+          - resource-reference: utdanning.elev.elevforhold
+          - resource-reference: utdanning.utdanningsprogram.skole
+            self-link-key-filter: systemid
   kafka:
     topic:
       org-id: ${fint.org-id}

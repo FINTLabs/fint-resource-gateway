@@ -4,11 +4,12 @@ fint:
     authorization:
       enable: true
   client:
-    base-url: https://beta.felleskomponent.no
+    base-url: http://localhost:3000
+    #base-url: https://beta.felleskomponent.no
   kafka:
     default-replicas: 1
 spring:
   kafka:
     bootstrap-servers: localhost:9092
 server:
-  port: 8087
+  port: 8089
