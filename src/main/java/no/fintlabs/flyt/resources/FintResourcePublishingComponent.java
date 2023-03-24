@@ -55,10 +55,21 @@ public class FintResourcePublishingComponent {
     }
 
     private void ensureTopics(List<EntityPipeline> entityPipelines, long topicRetentionTime) {
-        entityPipelines.forEach(entityPipeline -> this.entityTopicService.ensureTopic(
-                entityPipeline.getTopicNameParameters(),
-                topicRetentionTime
-        ));
+        entityPipelines.forEach(entityPipeline -> {
+
+            this.entityTopicService.ensureTopic(
+                    entityPipeline.getTopicNameParameters(),
+                    topicRetentionTime
+            );
+
+            entityPipeline.getSubEntityPipeline().ifPresent(
+                    subEntityPipeline -> this.entityTopicService.ensureTopic(
+                            subEntityPipeline.getTopicNameParameters(),
+                            topicRetentionTime
+                    )
+            );
+
+        });
     }
 
     @Scheduled(fixedRateString = "${fint.flyt.resource-gateway.resources.refresh.interval-ms}")
@@ -80,6 +91,25 @@ public class FintResourcePublishingComponent {
         List<HashMap<String, Object>> resources = getUpdatedResources(entityPipeline.getFintEndpoint());
         for (HashMap<String, Object> resource : resources) {
             String key = getKey(resource, entityPipeline.getSelfLinkKeyFilter());
+
+            entityPipeline.getSubEntityPipeline().ifPresent(
+                    subEntityPipeline -> {
+                        List<HashMap<String, Object>> subResources = (List<HashMap<String, Object>>) resource.get(subEntityPipeline.getSubEntityName());
+
+                        for (HashMap<String, Object> subResource : subResources) {
+                            entityProducer.send(
+                                    EntityProducerRecord.builder()
+                                            .topicNameParameters(subEntityPipeline.getTopicNameParameters())
+                                            .key(key + "-" + subResource.get(subEntityPipeline.getKeySuffixFilter()))
+                                            .value(subResource)
+                                            .build()
+                            );
+                        }
+
+                        subResources.clear();
+                    }
+            );
+
             entityProducer.send(
                     EntityProducerRecord.builder()
                             .topicNameParameters(entityPipeline.getTopicNameParameters())
@@ -87,6 +117,8 @@ public class FintResourcePublishingComponent {
                             .value(resource)
                             .build()
             );
+
+
         }
         log.info(resources.size() + " entities sent to " + entityPipeline.getTopicNameParameters());
     }
