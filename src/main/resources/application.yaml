@@ -30,6 +30,7 @@ fint:
           - resource-reference: arkiv.kodeverk.variantformat
           - resource-reference: arkiv.kodeverk.format
           - resource-reference: arkiv.kodeverk.saksmappetype
+          - resource-reference: arkiv.kodeverk.tilknyttetregistreringsom
           - resource-reference: arkiv.noark.arkivressurs
           - resource-reference: administrasjon.personal.personalressurs
             self-link-key-filter: ansattnummer
