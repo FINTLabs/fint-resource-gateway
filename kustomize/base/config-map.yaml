@@ -3,4 +3,8 @@ kind: ConfigMap
 metadata:
   name: fint-resource-gateway
 data:
-  TZ: Europe/Oslo
+  TZ: 'Europe/Oslo'
+  JAVA_TOOL_OPTIONS: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'
+  fint.flyt.resource-gateway.authorization.enable: 'true'
+  logging.level.no.fintlabs.arkiv: 'info'
+  logging.level.no.fintlabs.kafka: 'info'
