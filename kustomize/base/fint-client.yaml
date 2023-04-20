@@ -1,0 +1,21 @@
+apiVersion: fintlabs.no/v1alpha1
+kind: FintClient
+metadata:
+  name: fint-resource-gateway-fint-client
+  namespace: fintlabs-no
+  labels:
+    app.kubernetes.io/name: fint-resource-gateway
+    app.kubernetes.io/instance: fint-resource-gateway-fint-client
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: fint-flyt
+    fintlabs.no/team: flyt
+    fintlabs.no/org-id: fintlabs.no
+
+spec:
+  orgId: fintlabs.no
+  note: Arkivbruker
+  components:
+    - arkiv_noark
+    - arkiv_kodeverk
+    - administrasjon_personal

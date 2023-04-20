@@ -1,10 +1,3 @@
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
-metadata:
-  name: viken-test-fint-resource-gateway
-spec:
-  itemPath: "vaults/aks-alpha-vault/items/viken-test-flyt-fint-resource-gateway"
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,6 +32,6 @@ spec:
             - secretRef:
                 name: fint-resource-gateway-kafka
             - secretRef:
-                name: viken-test-fint-resource-gateway
+                name: fint-resource-gateway-fint-client
             - configMapRef:
                 name: fint-resource-gateway
