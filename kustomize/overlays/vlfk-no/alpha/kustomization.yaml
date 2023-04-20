@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: vlfk-no
 resources:
   - ../../../base
+  - fint-client.yaml
 patchesStrategicMerge:
   - config-map.yaml
 commonLabels:

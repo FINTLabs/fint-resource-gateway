@@ -4,4 +4,4 @@ metadata:
   name: fint-resource-gateway
 data:
   fint.org-id: 'vlfk.no'
-  fint.client.base-url: 'https://api.felleskomponent.no'
+  fint.client.base-url: 'https://beta.felleskomponent.no'
