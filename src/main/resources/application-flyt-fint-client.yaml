@@ -1,6 +1,8 @@
 fint:
   client:
     registration-id: fint
+    username: ${fint.core.oauth2.username}
+    password: ${fint.core.oauth2.password}
 spring:
   security:
     oauth2:
@@ -13,3 +15,5 @@ spring:
             authorization-grant-type: password
             provider: fint-idp
             scope: fint-client
+            client-id: ${fint.core.oauth2.client-id}
+            client-secret: ${fint.core.oauth2.client-secret}
