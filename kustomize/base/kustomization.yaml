@@ -4,5 +4,4 @@ resources:
   - kafka-user-and-acl.yaml
   - service.yaml
   - config-map.yaml
-  - fint-client.yaml
   - deployment.yaml
