@@ -2,7 +2,7 @@ apiVersion: fintlabs.no/v1alpha1
 kind: FintClient
 metadata:
   name: fint-resource-gateway-fint-client
-  namespace: fintlabs-no
+  namespace: vlfk-no
   labels:
     app.kubernetes.io/name: fint-resource-gateway
     app.kubernetes.io/instance: fint-resource-gateway-fint-client
@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: fint-flyt
     fintlabs.no/team: flyt
-    fintlabs.no/org-id: fintlabs.no
+    fintlabs.no/org-id: vlfk.no
 
 spec:
   orgId: vlfk.no
