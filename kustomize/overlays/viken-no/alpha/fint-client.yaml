@@ -14,7 +14,7 @@ metadata:
 
 spec:
   orgId: viken.no
-  note: Brukes i forbindelse med uthenting av data til Fint-Flyt
+  note: Brukes av FINT Flyt til å hente og skrive data
   components:
     - arkiv_noark
     - arkiv_kodeverk
