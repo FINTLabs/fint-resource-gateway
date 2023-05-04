@@ -1,0 +1,21 @@
+apiVersion: fintlabs.no/v1alpha1
+kind: FintClient
+metadata:
+  name: fint-resource-gateway-fint-client
+  namespace: vlfk-no
+  labels:
+    app.kubernetes.io/name: fint-resource-gateway
+    app.kubernetes.io/instance: fint-resource-gateway-fint-client
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: fint-flyt
+    fintlabs.no/team: flyt
+    fintlabs.no/org-id: vlfk.no
+
+spec:
+  orgId: vlfk.no
+  note: Brukes av FINT Flyt til å hente og skrive data
+  components:
+    - arkiv_noark
+    - arkiv_kodeverk
+    - administrasjon_personal
