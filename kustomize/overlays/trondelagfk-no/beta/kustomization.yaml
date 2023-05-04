@@ -4,7 +4,6 @@ namespace: trondelagfk-no
 
 resources:
   - ../../../base2
-  - fint-client.yaml
 
 patches:
   - patch: |-
