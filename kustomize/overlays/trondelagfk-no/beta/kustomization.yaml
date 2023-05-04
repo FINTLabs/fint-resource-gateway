@@ -23,4 +23,14 @@ patches:
     target:
       kind: Application
       name: fint-resource-gateway
+  - patch: |-
+      - op: replace
+        path: "/metadata/labels/fintlabs.no~1org-id"
+        value: "trondelagfk.no"
+      - op: replace
+        path: "/spec/orgId"
+        value: "trondelagfk.no"
+    target:
+      kind: FintClient
+      name: fint-resource-gateway-fint-client
 
