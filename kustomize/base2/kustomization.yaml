@@ -3,3 +3,11 @@ kind: Kustomization
 resources:
   - flais.yaml
   - fint-client.yaml
+commonLabels:
+  app.kubernetes.io/name: fint-resource-gateway
+  app.kubernetes.io/instance: fint-resource-gateway
+  app.kubernetes.io/version: latest
+  app.kubernetes.io/component: backend
+  app.kubernetes.io/part-of: fint-flyt
+  fintlabs.no/team: flyt
+  fintlabs.no/org-id: fintlabs.no
