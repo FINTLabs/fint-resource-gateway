@@ -26,7 +26,7 @@ spec:
       value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'
   envFrom:
     - secretRef:
-        name: fint-resource-gateway-fint-client
+        name: fint-flyt-egrunnerverv-fint-client
   resources:
     limits:
       memory: "4Gi"

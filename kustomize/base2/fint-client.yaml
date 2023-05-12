@@ -1,7 +1,7 @@
 apiVersion: fintlabs.no/v1alpha1
 kind: FintClient
 metadata:
-  name: fint-resource-gateway-fint-client
+  name: fint-flyt-egrunnerverv-fint-client
   namespace: fintlabs-no
 spec:
   orgId: fintlabs.no

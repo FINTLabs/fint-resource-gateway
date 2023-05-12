@@ -29,5 +29,5 @@ patches:
         value: "trondelagfylke.no"
     target:
       kind: FintClient
-      name: fint-resource-gateway-fint-client
+      name: fint-flyt-egrunnerverv-fint-client
 
