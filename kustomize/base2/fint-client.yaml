@@ -5,7 +5,7 @@ metadata:
   namespace: fintlabs-no
   labels:
     app.kubernetes.io/name: fint-flyt-egrunnerverv-fint-client
-    app.kubernetes.io/instance: fint-flyt-egrunnerverv-fint-client
+    app.kubernetes.io/instance: fint-flyt-egrunnerverv-fint-client_fintlabs_no
     app.kubernetes.io/version: latest
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: fint-flyt
