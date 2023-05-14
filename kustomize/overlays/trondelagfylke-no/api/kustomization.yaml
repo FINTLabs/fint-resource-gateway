@@ -19,6 +19,9 @@ patches:
       - op: replace
         path: "/spec/orgId"
         value: "trondelagfylke.no"
+      - op: replace
+        path: "/spec/env/1/value"
+        value: "https://api.felleskomponent.no"
     target:
       kind: Application
       name: fint-resource-gateway
