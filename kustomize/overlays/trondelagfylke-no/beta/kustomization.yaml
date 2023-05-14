@@ -29,7 +29,7 @@ patches:
   - patch: |-
       - op: replace
         path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-flyt-egrunnerverv-fint-client_trondelagfylke_no"
+        value: "fint-flyt-egrv-fint-client_trondelagfylke_no"
       - op: replace
         path: "/spec/orgId"
         value: "trondelagfylke.no"
