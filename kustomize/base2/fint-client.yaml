@@ -3,6 +3,14 @@ kind: FintClient
 metadata:
   name: fint-flyt-egrunnerverv-fint-client
   namespace: fintlabs-no
+  labels:
+    app.kubernetes.io/name: fint-flyt-egrunnerverv-fint-client
+    app.kubernetes.io/instance: fint-flyt-egrunnerverv-fint-client
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: fint-flyt
+    fintlabs.no/team: flyt
+    fintlabs.no/org-id: fintlabs.no
 spec:
   orgId: fintlabs.no
   note: Brukes av FINT Flyt til å hente og skrive data

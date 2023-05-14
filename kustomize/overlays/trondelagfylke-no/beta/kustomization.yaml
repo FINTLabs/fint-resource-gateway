@@ -6,11 +6,13 @@ resources:
   - ../../../base2
 
 commonLabels:
-  app.kubernetes.io/instance: fint-resource-gateway_trondelagfylke_no
   fintlabs.no/org-id: trondelagfylke.no
 
 patches:
   - patch: |-
+      - op: replace
+        path: "/metadata/labels/app.kubernetes.io~1instance"
+        value: "fint-resource-gateway_trondelagfylke_no"
       - op: replace
         path: "/spec/kafka/acls/0/topic"
         value: "trondelagfylke-no.flyt.*"
@@ -20,14 +22,4 @@ patches:
     target:
       kind: Application
       name: fint-resource-gateway
-  - patch: |-
-      - op: replace
-        path: "/metadata/labels/fintlabs.no~1org-id"
-        value: "trondelagfylke.no"
-      - op: replace
-        path: "/spec/orgId"
-        value: "trondelagfylke.no"
-    target:
-      kind: FintClient
-      name: fint-flyt-egrunnerverv-fint-client
 
