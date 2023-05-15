@@ -26,6 +26,8 @@ spec:
       value: '-XX:+ExitOnOutOfMemoryError -Xmx1840M'
     - name: fint.client.base-url
       value: path
+    - name: fint.flyt.resource-gateway.authorization.enable
+      value: 'true'
   envFrom:
     - secretRef:
         name: fint-flyt-egrv-fint-client
