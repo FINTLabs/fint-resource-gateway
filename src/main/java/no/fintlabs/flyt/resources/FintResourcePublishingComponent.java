@@ -14,10 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientException;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -94,7 +91,7 @@ public class FintResourcePublishingComponent {
 
             entityPipeline.getSubEntityPipeline().ifPresent(
                     subEntityPipeline -> {
-                        List<HashMap<String, Object>> subResources = (List<HashMap<String, Object>>) resource.get(subEntityPipeline.getSubEntityName());
+                        List<HashMap<String, Object>> subResources = new ArrayList<>((List<HashMap<String, Object>>) resource.getOrDefault(subEntityPipeline.getSubEntityName(), List.of()));
 
                         for (HashMap<String, Object> subResource : subResources) {
                             entityProducer.send(

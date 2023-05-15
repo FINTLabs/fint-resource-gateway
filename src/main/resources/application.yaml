@@ -12,9 +12,9 @@ fint:
         entity-pipelines:
           - resource-reference: arkiv.noark.administrativenhet
           - resource-reference: arkiv.noark.klassifikasjonssystem
-#            sub-entity-pipeline-configuration:
-#              reference: klasse
-#              key-suffix-filter: klasseId
+            sub-entity-pipeline-configuration:
+              reference: klasse
+              key-suffix-filter: klasseId
           - resource-reference: arkiv.kodeverk.rolle
           - resource-reference: arkiv.kodeverk.partrolle
           - resource-reference: arkiv.kodeverk.korrespondanseparttype
