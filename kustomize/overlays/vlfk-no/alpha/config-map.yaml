@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: fint-resource-gateway
-data:
-  fint.org-id: 'vlfk.no'
-  fint.client.base-url: 'https://beta.felleskomponent.no'
