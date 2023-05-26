@@ -91,19 +91,23 @@ public class FintResourcePublishingComponent {
 
             entityPipeline.getSubEntityPipeline().ifPresent(
                     subEntityPipeline -> {
-                        List<HashMap<String, Object>> subResources = new ArrayList<>((List<HashMap<String, Object>>) resource.getOrDefault(subEntityPipeline.getSubEntityName(), List.of()));
 
-                        for (HashMap<String, Object> subResource : subResources) {
-                            entityProducer.send(
-                                    EntityProducerRecord.builder()
-                                            .topicNameParameters(subEntityPipeline.getTopicNameParameters())
-                                            .key(key + "-" + subResource.get(subEntityPipeline.getKeySuffixFilter()))
-                                            .value(subResource)
-                                            .build()
-                            );
+                        List<HashMap<String, Object>> subResources = (List<HashMap<String, Object>>) resource.get(subEntityPipeline.getSubEntityName());
+
+                        if (subResources != null) {
+
+                            for (HashMap<String, Object> subResource : subResources) {
+                                entityProducer.send(
+                                        EntityProducerRecord.builder()
+                                                .topicNameParameters(subEntityPipeline.getTopicNameParameters())
+                                                .key(key + "-" + subResource.get(subEntityPipeline.getKeySuffixFilter()))
+                                                .value(subResource)
+                                                .build()
+                                );
+                            }
+
+                            subResources.clear();
                         }
-
-                        subResources.clear();
                     }
             );
 
