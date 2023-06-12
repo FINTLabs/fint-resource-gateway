@@ -32,7 +32,7 @@ spec:
     itemPath: "vaults/aks-alpha-vault/items/fint-flyt-egrv-fint-client-vlfk-no"
   envFrom:
     - secretRef:
-        name: fint-flyt-egrv-fint-client
+        name: fint-resource-gateway-op
   resources:
     limits:
       memory: "4Gi"
