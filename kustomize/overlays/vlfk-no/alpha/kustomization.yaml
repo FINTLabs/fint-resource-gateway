@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: vlfk-no
 
 resources:
-  - ../../../base
+  - flais.yaml
 
 commonLabels:
   fintlabs.no/org-id: vlfk.no
@@ -25,15 +25,3 @@ patches:
     target:
       kind: Application
       name: fint-resource-gateway
-
-  - patch: |-
-      - op: replace
-        path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-flyt-egrv-fint-client_vlfk_no"
-      - op: replace
-        path: "/spec/orgId"
-        value: "vlfk.no"
-    target:
-      kind: FintClient
-      name: fint-flyt-egrv-fint-client
-
