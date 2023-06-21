@@ -29,11 +29,11 @@ patches:
   - patch: |-
       - op: replace
         path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-flyt-egrv-fint-client_viken_no"
+        value: "fint-flyt-archive-fint-client_viken_no"
       - op: replace
         path: "/spec/orgId"
         value: "viken.no"
     target:
       kind: FintClient
-      name: fint-flyt-egrv-fint-client
+      name: fint-flyt-archive-fint-client
 

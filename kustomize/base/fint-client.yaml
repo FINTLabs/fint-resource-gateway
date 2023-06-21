@@ -1,11 +1,11 @@
 apiVersion: fintlabs.no/v1alpha1
 kind: FintClient
 metadata:
-  name: fint-flyt-egrv-fint-client
+  name: fint-flyt-archive-fint-client
   namespace: fintlabs-no
   labels:
-    app.kubernetes.io/name: fint-flyt-egrv-fint-client
-    app.kubernetes.io/instance: fint-flyt-egrv-fint-client_fintlabs_no
+    app.kubernetes.io/name: fint-flyt-archive-fint-client
+    app.kubernetes.io/instance: fint-flyt-archive-fint-client_fintlabs_no
     app.kubernetes.io/version: latest
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: fint-flyt
@@ -13,7 +13,7 @@ metadata:
     fintlabs.no/org-id: fintlabs.no
 spec:
   orgId: fintlabs.no
-  note: Brukes av FINT Flyt til å hente og skrive data for eGrunnerverv
+  note: Brukes av FINT Flyt til å hente og skrive data fra arkiv
   components:
     - arkiv_noark
     - arkiv_kodeverk
