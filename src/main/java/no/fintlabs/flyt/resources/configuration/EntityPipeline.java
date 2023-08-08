@@ -6,14 +6,12 @@ import no.fintlabs.kafka.entity.topic.EntityTopicNameParameters;
 
 import java.util.Optional;
 
+@Getter
 @AllArgsConstructor
 public class EntityPipeline {
 
-    @Getter
     private EntityTopicNameParameters topicNameParameters;
-    @Getter
     private String fintEndpoint;
-    @Getter
     private String selfLinkKeyFilter;
 
     private SubEntityPipeline subEntityPipeline;
