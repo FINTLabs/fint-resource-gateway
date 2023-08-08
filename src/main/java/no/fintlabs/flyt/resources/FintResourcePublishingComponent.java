@@ -143,7 +143,7 @@ public class FintResourcePublishingComponent {
         return selfLinks.stream()
                 .filter(o -> o.containsKey("href"))
                 .map(o -> o.get("href"))
-                .map(k -> k.replaceFirst("^https:/\\/.+\\.felleskomponent.no", ""))
+                .map(k -> k.replaceFirst("^https://.+\\.felleskomponent.no", ""))
                 .filter(o -> o.toLowerCase().contains(selfLinkKeyFilter))
                 .min(String::compareTo)
                 .orElseThrow(() -> new IllegalStateException(String.format("No %s to generate key for resource=%s", selfLinkKeyFilter, resource)));
