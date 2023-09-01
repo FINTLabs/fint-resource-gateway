@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: innlandetfylke-no
 
 resources:
-  - ../../../base
+  - flais.yaml
 
 commonLabels:
   fintlabs.no/org-id: innlandetfylke.no
@@ -25,15 +25,3 @@ patches:
     target:
       kind: Application
       name: fint-resource-gateway
-
-  - patch: |-
-      - op: replace
-        path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-flyt-archive-fint-client_innlandetfylke_no"
-      - op: replace
-        path: "/spec/orgId"
-        value: "innlandetfylke.no"
-    target:
-      kind: FintClient
-      name: fint-flyt-archive-fint-client
-
