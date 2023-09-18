@@ -59,6 +59,16 @@ jobs:
           - org: innlandetfylke-no
             cluster: aks-beta-fint-2021-11-23
 
+          - org: mrfylke-no
+            cluster: aks-api-fint-2022-02-08
+          - org: mrfylke-no
+            cluster: aks-beta-fint-2021-11-23
+
+          - org: nfk-no
+            cluster: aks-api-fint-2022-02-08
+          - org: nfk-no
+            cluster: aks-beta-fint-2021-11-23
+
           - org: viken-no
             cluster: aks-api-fint-2022-02-08
           - org: viken-no
@@ -73,6 +83,8 @@ jobs:
 
           - org: trondelagfylke-no
             cluster: aks-beta-fint-2021-11-23
+          - org: trondelagfylke-no
+            cluster: aks-api-fint-2022-02-08
 
     steps:
       - name: Checkout repository
