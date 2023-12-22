@@ -1,27 +1,27 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: trondelagfylke-no
+namespace: vestfoldfylke-no
 
 resources:
   - ../../../base
 
 commonLabels:
-  fintlabs.no/org-id: trondelagfylke.no
+  fintlabs.no/org-id: vestfoldfylke.no
 
 patches:
   - patch: |-
       - op: replace
         path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-resource-gateway_trondelagfylke_no"
+        value: "fint-resource-gateway_vestfoldfylke_no"
       - op: replace
         path: "/spec/kafka/acls/0/topic"
-        value: "trondelagfylke-no.flyt.*"
+        value: "vestfoldfylke-no.flyt.*"
       - op: replace
         path: "/spec/orgId"
-        value: "trondelagfylke.no"
+        value: "vestfoldfylke.no"
       - op: replace
         path: "/spec/env/1/value"
-        value: "https://beta.felleskomponent.no"
+        value: "https://api.felleskomponent.no"
     target:
       kind: Application
       name: fint-resource-gateway
@@ -29,11 +29,10 @@ patches:
   - patch: |-
       - op: replace
         path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-flyt-archive-fint-client_trondelagfylke_no"
+        value: "fint-flyt-archive-fint-client_vestfoldfylke_no"
       - op: replace
         path: "/spec/orgId"
-        value: "trondelagfylke.no"
+        value: "vestfoldfylke.no"
     target:
       kind: FintClient
       name: fint-flyt-archive-fint-client
-

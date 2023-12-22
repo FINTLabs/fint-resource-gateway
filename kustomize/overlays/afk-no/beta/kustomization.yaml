@@ -1,24 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: viken-no
+namespace: afk-no
 
 resources:
   - ../../../base
 
 commonLabels:
-  fintlabs.no/org-id: viken.no
+  fintlabs.no/org-id: afk.no
 
 patches:
   - patch: |-
       - op: replace
         path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-resource-gateway_viken_no"
+        value: "fint-resource-gateway_afk_no"
       - op: replace
         path: "/spec/kafka/acls/0/topic"
-        value: "viken-no.flyt.*"
+        value: "afk-no.flyt.*"
       - op: replace
         path: "/spec/orgId"
-        value: "viken.no"
+        value: "afk.no"
       - op: replace
         path: "/spec/env/1/value"
         value: "https://beta.felleskomponent.no"
@@ -29,10 +29,10 @@ patches:
   - patch: |-
       - op: replace
         path: "/metadata/labels/app.kubernetes.io~1instance"
-        value: "fint-flyt-archive-fint-client_viken_no"
+        value: "fint-flyt-archive-fint-client_afk_no"
       - op: replace
         path: "/spec/orgId"
-        value: "viken.no"
+        value: "afk.no"
     target:
       kind: FintClient
       name: fint-flyt-archive-fint-client
