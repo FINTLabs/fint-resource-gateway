@@ -53,28 +53,10 @@ jobs:
     strategy:
       matrix:
         org:
-          - afk-no
-          - agderfk-no
-          - bfk-no
-          - ffk-no
-          - fintlabs-no
-          - innlandetfylke-no
-          - mrfylke-no
-          - nfk-no
-          - ofk-no
-          - rogfk-no
-          - telemarkfylke-no
-          - tromsfylke-no
-          - trondelagfylke-no
-          - vestfoldfylke-no
           - vlfk-no
 
         cluster:
-          - aks-beta-fint-2021-11-23
-          - aks-api-fint-2022-02-08
-        exclude:
-          - org: fintlabs-no
-            cluster: aks-api-fint-2022-02-08
+          - aks-alpha-fint-2021-11-18
 
     steps:
       - name: Checkout repository
